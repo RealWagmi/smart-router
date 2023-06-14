@@ -17,3 +17,4 @@ export * from './pool-tvl-selectors';
 export * from './hybrid-pool-provider';
 export * from './get-v3-candidate-pools';
 export * from './get-candidate-pools';
+export * from './static-pool-provider';
