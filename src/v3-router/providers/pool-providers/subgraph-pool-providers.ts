@@ -109,7 +109,6 @@ interface V3PoolSubgraphResult {
   sqrtPrice: string
   tick: string
   feeTier: string
-  feeProtocol: string
   totalValueLockedUSD: string
 }
 
@@ -121,7 +120,6 @@ const queryV3Pools = gql`
       sqrtPrice
       feeTier
       liquidity
-      feeProtocol
       totalValueLockedUSD
     }
   }
@@ -136,7 +134,7 @@ export const getV3PoolSubgraph = subgraphPoolProviderFactory<V3PoolMeta, V3PoolW
       poolAddrs: addresses,
     })
 
-    return poolsFromSubgraph.map(({ id, liquidity, sqrtPrice, tick, totalValueLockedUSD, feeProtocol }) => {
+    return poolsFromSubgraph.map(({ id, liquidity, sqrtPrice, tick, totalValueLockedUSD }) => {
       const meta = getPoolMetaByAddress(id as Address)
       if (!meta) {
         return null
@@ -146,7 +144,6 @@ export const getV3PoolSubgraph = subgraphPoolProviderFactory<V3PoolMeta, V3PoolW
       const [token0, token1] = currencyA.wrapped.sortsBefore(currencyB.wrapped)
         ? [currencyA, currencyB]
         : [currencyB, currencyA]
-      const [token0ProtocolFee, token1ProtocolFee] = parseProtocolFees(feeProtocol)
       return {
         type: PoolType.V3 as const,
         fee,
@@ -157,8 +154,6 @@ export const getV3PoolSubgraph = subgraphPoolProviderFactory<V3PoolMeta, V3PoolW
         tick: Number(tick),
         address,
         tvlUSD: BigInt(Number.parseInt(totalValueLockedUSD)),
-        token0ProtocolFee,
-        token1ProtocolFee,
       }
     })
   },
@@ -237,7 +232,6 @@ const queryAllV3Pools = gql`
       sqrtPrice
       feeTier
       liquidity
-      feeProtocol
       totalValueLockedUSD
     }
   }
@@ -266,8 +260,7 @@ export const getAllV3PoolsFromSubgraph = subgraphAllPoolsQueryFactory<V3PoolWith
     )
 
     return poolsFromSubgraph.map(
-      ({ id, liquidity, sqrtPrice, tick, totalValueLockedUSD, feeProtocol, token0, token1, feeTier }) => {
-        const [token0ProtocolFee, token1ProtocolFee] = parseProtocolFees(feeProtocol)
+      ({ id, liquidity, sqrtPrice, tick, totalValueLockedUSD, token0, token1, feeTier }) => {
         return {
           type: PoolType.V3 as const,
           fee: Number(feeTier),
@@ -278,8 +271,6 @@ export const getAllV3PoolsFromSubgraph = subgraphAllPoolsQueryFactory<V3PoolWith
           tick: Number(tick),
           address: getAddress(id),
           tvlUSD: BigInt(Number.parseInt(totalValueLockedUSD)),
-          token0ProtocolFee,
-          token1ProtocolFee,
         }
       },
     )

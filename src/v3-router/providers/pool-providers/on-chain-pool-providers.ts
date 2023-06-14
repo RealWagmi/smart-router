@@ -1,5 +1,5 @@
 import { ChainId, Currency, BigintIsh } from '@real-wagmi/sdk'
-import { FeeAmount, V3_CORE_FACTORY_ADDRESSES, parseProtocolFees } from '@real-wagmi/v3-sdk'
+import { FeeAmount, V3_CORE_FACTORY_ADDRESSES } from '@real-wagmi/v3-sdk'
 import { Address, ContractFunctionConfig, Abi } from 'viem'
 
 import { OnChainProvider, Pool, PoolType, V3Pool } from '../../types'
@@ -40,11 +40,10 @@ export const getV3PoolsWithoutTicksOnChain = createOnChainPoolFactory<V3Pool, V3
     if (!liquidity || !slot0) {
       return null
     }
-    const [sqrtPriceX96, tick, , , , feeProtocol] = slot0
+    const [sqrtPriceX96, tick] = slot0
     const [token0, token1] = currencyA.wrapped.sortsBefore(currencyB.wrapped)
       ? [currencyA, currencyB]
       : [currencyB, currencyA]
-    const [token0ProtocolFee, token1ProtocolFee] = parseProtocolFees(feeProtocol)
     return {
       type: PoolType.V3,
       token0,
@@ -54,8 +53,6 @@ export const getV3PoolsWithoutTicksOnChain = createOnChainPoolFactory<V3Pool, V3
       sqrtRatioX96: BigInt(sqrtPriceX96.toString()),
       tick: Number(tick),
       address,
-      token0ProtocolFee,
-      token1ProtocolFee,
     }
   },
 })

@@ -20,8 +20,6 @@ export interface V3Pool extends BasePool {
     sqrtRatioX96: bigint;
     tick: number;
     address: Address;
-    token0ProtocolFee: Percent;
-    token1ProtocolFee: Percent;
 
     // Allow pool with no ticks data provided
     ticks?: Tick[];
