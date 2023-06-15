@@ -1,5 +1,5 @@
 import { ChainId, Currency, BigintIsh } from '@real-wagmi/sdk'
-import { FeeAmount, V3_CORE_FACTORY_ADDRESSES } from '@real-wagmi/v3-sdk'
+import { FeeAmount } from '@real-wagmi/v3-sdk'
 import { Address, ContractFunctionConfig, Abi } from 'viem'
 
 import { OnChainProvider, Pool, PoolType, V3Pool } from '../../types'
@@ -10,10 +10,6 @@ import { PoolMeta, V3PoolMeta } from './internal-types'
 export const getV3PoolsWithoutTicksOnChain = createOnChainPoolFactory<V3Pool, V3PoolMeta>({
   abi: wagmiV3PoolABI,
   getPossiblePoolMetas: ([currencyA, currencyB]) => {
-    const deployerAddress = V3_CORE_FACTORY_ADDRESSES[currencyA.chainId as ChainId]
-    if (!deployerAddress) {
-      return []
-    }
     return [FeeAmount.LOWEST, FeeAmount.LOW, FeeAmount.MEDIUM, FeeAmount.HIGH].map((fee) => ({
       address: computeV3PoolAddress({
         chainId: currencyA.chainId,

@@ -1,5 +1,5 @@
 import { ChainId, Currency, CurrencyAmount } from '@real-wagmi/sdk'
-import { QUOTER_ADDRESSES } from '@real-wagmi/v3-sdk';
+import { QUOTER_V2_ADDRESSES } from '@real-wagmi/v3-sdk';
 import { Abi, Address } from 'viem'
 import retry, { Options as RetryOptions } from 'async-retry'
 import stats from 'stats-lite'
@@ -597,7 +597,7 @@ function processQuoteResults(
 }
 
 export const createV3OnChainQuoteProvider = onChainQuoteProviderFactory({
-  getQuoterAddress: (chainId) => QUOTER_ADDRESSES[chainId],
+  getQuoterAddress: (chainId) => QUOTER_V2_ADDRESSES[chainId],
   getQuoteFunctionName: (isExactIn) => (isExactIn ? 'quoteExactInput' : 'quoteExactOutput'),
   abi: quoterV2ABI,
   getCallInputs: (route, isExactIn) => [

@@ -1,9 +1,7 @@
-import { ChainId, CurrencyAmount, Currency, Token, Ether, TradeType, Percent } from '@real-wagmi/sdk';
+import { ChainId, CurrencyAmount, Currency, Token, Ether, TradeType } from '@real-wagmi/sdk';
 import { Address, zeroAddress } from 'viem';
 import { Pool, PoolType, Route, SmartRouterTrade, V3Pool } from '../types';
 import { isV3Pool } from './pool';
-
-const ONE_HUNDRED = 100n;
 
 interface SerializedCurrency {
     address: Address;
@@ -16,13 +14,11 @@ interface SerializedCurrencyAmount {
     value: string;
 }
 
-interface SerializedV3Pool extends Omit<V3Pool, 'token0' | 'token1' | 'liquidity' | 'sqrtRatioX96' | 'token0ProtocolFee' | 'token1ProtocolFee'> {
+interface SerializedV3Pool extends Omit<V3Pool, 'token0' | 'token1' | 'liquidity' | 'sqrtRatioX96'> {
     token0: SerializedCurrency;
     token1: SerializedCurrency;
     liquidity: string;
     sqrtRatioX96: string;
-    token0ProtocolFee: string;
-    token1ProtocolFee: string;
 }
 
 type SerializedPool = SerializedV3Pool;
@@ -65,8 +61,6 @@ export function serializePool(pool: Pool): SerializedPool {
             token1: serializeCurrency(pool.token1),
             liquidity: pool.liquidity.toString(),
             sqrtRatioX96: pool.sqrtRatioX96.toString(),
-            token0ProtocolFee: pool.token0ProtocolFee.toFixed(0),
-            token1ProtocolFee: pool.token1ProtocolFee.toFixed(0),
         };
     }
     throw new Error('Cannot serialize unsupoorted pool');
@@ -113,8 +107,6 @@ export function parsePool(chainId: ChainId, pool: SerializedPool): Pool {
             token1: parseCurrency(chainId, pool.token1),
             liquidity: BigInt(pool.liquidity),
             sqrtRatioX96: BigInt(pool.sqrtRatioX96),
-            token0ProtocolFee: new Percent(pool.token0ProtocolFee, ONE_HUNDRED),
-            token1ProtocolFee: new Percent(pool.token1ProtocolFee, ONE_HUNDRED),
         };
     }
 
