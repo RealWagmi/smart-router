@@ -76,9 +76,9 @@ async function getBestRoutes(
         gasModel,
         quoterOptimization,
     });
-    routesWithValidQuote.forEach(({ percent, path, amount: a, quote }) => {
-        const pathStr = path.map(t => t.symbol).join('->');
-        console.log(`${percent}% Swap`, a.toExact(), a.currency.symbol, 'through', pathStr, ':', quote.toExact(), quote.currency.symbol);
-    });
+    // routesWithValidQuote.forEach(({ percent, path, amount: a, quote }) => {
+    //     const pathStr = path.map(t => t.symbol).join('->');
+    //     console.log(`${percent}% Swap`, a.toExact(), a.currency.symbol, 'through', pathStr, ':', quote.toExact(), quote.currency.symbol);
+    // });
     return getBestRouteCombinationByQuotes(amount, currency, routesWithValidQuote, tradeType, { maxSplits });
 }

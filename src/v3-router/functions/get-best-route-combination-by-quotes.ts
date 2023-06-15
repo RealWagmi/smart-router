@@ -67,28 +67,28 @@ export function getBestRouteCombinationByQuotes(
 
     const missingAmount = amount.subtract(totalAmount);
     if (missingAmount.greaterThan(0)) {
-        console.log(
-            {
-                missingAmount: missingAmount.quotient.toString(),
-            },
-            `Optimal route's amounts did not equal exactIn/exactOut total. Adding missing amount to last route in array.`,
-        );
+        // console.log(
+        //     {
+        //         missingAmount: missingAmount.quotient.toString(),
+        //     },
+        //     `Optimal route's amounts did not equal exactIn/exactOut total. Adding missing amount to last route in array.`,
+        // );
 
         routeAmounts[routeAmounts.length - 1]!.amount = routeAmounts[routeAmounts.length - 1]!.amount.add(missingAmount);
     }
 
-    console.log(
-        {
-            routes: routeAmounts,
-            numSplits: routeAmounts.length,
-            amount: amount.toExact(),
-            quote: swapRoute.quote.toExact(),
-            quoteGasAdjusted: swapRoute.quoteGasAdjusted.toFixed(Math.min(swapRoute.quoteGasAdjusted.currency.decimals, 2)),
-            estimatedGasUSD: swapRoute.estimatedGasUsedUSD.toFixed(Math.min(swapRoute.estimatedGasUsedUSD.currency.decimals, 2)),
-            estimatedGasToken: swapRoute.estimatedGasUsedQuoteToken.toFixed(Math.min(swapRoute.estimatedGasUsedQuoteToken.currency.decimals, 2)),
-        },
-        `Found best swap route. ${routeAmounts.length} split.`,
-    );
+    // console.log(
+    //     {
+    //         routes: routeAmounts,
+    //         numSplits: routeAmounts.length,
+    //         amount: amount.toExact(),
+    //         quote: swapRoute.quote.toExact(),
+    //         quoteGasAdjusted: swapRoute.quoteGasAdjusted.toFixed(Math.min(swapRoute.quoteGasAdjusted.currency.decimals, 2)),
+    //         estimatedGasUSD: swapRoute.estimatedGasUsedUSD.toFixed(Math.min(swapRoute.estimatedGasUsedUSD.currency.decimals, 2)),
+    //         estimatedGasToken: swapRoute.estimatedGasUsedQuoteToken.toFixed(Math.min(swapRoute.estimatedGasUsedQuoteToken.currency.decimals, 2)),
+    //     },
+    //     `Found best swap route. ${routeAmounts.length} split.`,
+    // );
 
     const { routes, quote: quoteAmount, estimatedGasUsed, estimatedGasUsedUSD } = swapRoute;
     const quote = CurrencyAmount.fromRawAmount(quoteCurrency, quoteAmount.quotient);
@@ -166,12 +166,12 @@ export function getBestSwapRouteBy(
     );
 
     if (!percentToSortedQuotes[100] || minSplits > 1) {
-        console.log(
-            {
-                percentToSortedQuotes: mapValues(percentToSortedQuotes, p => p.length),
-            },
-            'Did not find a valid route without any splits. Continuing search anyway.',
-        );
+        // console.log(
+        //     {
+        //         percentToSortedQuotes: mapValues(percentToSortedQuotes, p => p.length),
+        //     },
+        //     'Did not find a valid route without any splits. Continuing search anyway.',
+        // );
     } else {
         bestQuote = by(percentToSortedQuotes[100][0]!);
         bestSwap = [percentToSortedQuotes[100][0]!];
@@ -233,28 +233,28 @@ export function getBestSwapRouteBy(
 
         // startedSplit = Date.now()
 
-        console.log(
-            {
-                top5: Array.from(bestSwapsPerSplit.consume()).map(
-                    q =>
-                        `${q.quote.toExact()} (${q.routes
-                            .map(
-                                r =>
-                                    `${r.percent}% ${r.amount.toExact()} ${r.pools
-                                        .map(p => {
-                                            if (isV3Pool(p)) {
-                                                return `V3 fee ${p.fee} ${p.token0.symbol}-${p.token1.symbol}`;
-                                            }
-                                            return `Stable ${p}`;
-                                        })
-                                        .join(', ')} ${r.quote.toExact()}`,
-                            )
-                            .join(', ')})`,
-                ),
-                onQueue: queue.size,
-            },
-            `Top 3 with ${splits} splits`,
-        );
+        // console.log(
+        //     {
+        //         top5: Array.from(bestSwapsPerSplit.consume()).map(
+        //             q =>
+        //                 `${q.quote.toExact()} (${q.routes
+        //                     .map(
+        //                         r =>
+        //                             `${r.percent}% ${r.amount.toExact()} ${r.pools
+        //                                 .map(p => {
+        //                                     if (isV3Pool(p)) {
+        //                                         return `V3 fee ${p.fee} ${p.token0.symbol}-${p.token1.symbol}`;
+        //                                     }
+        //                                     return `Stable ${p}`;
+        //                                 })
+        //                                 .join(', ')} ${r.quote.toExact()}`,
+        //                     )
+        //                     .join(', ')})`,
+        //         ),
+        //         onQueue: queue.size,
+        //     },
+        //     `Top 3 with ${splits} splits`,
+        // );
 
         bestSwapsPerSplit.clear();
 
@@ -268,7 +268,7 @@ export function getBestSwapRouteBy(
         }
 
         if (splits > maxSplits) {
-            console.log('Max splits reached. Stopping search.');
+            // console.log('Max splits reached. Stopping search.');
             // metric.putMetric(`MaxSplitsHitReached`, 1, MetricLoggerUnit.Count);
             break;
         }
@@ -359,7 +359,7 @@ export function getBestSwapRouteBy(
     }
 
     if (!bestSwap) {
-        console.log(`Could not find a valid swap`);
+        // console.log(`Could not find a valid swap`);
         return null;
     }
 

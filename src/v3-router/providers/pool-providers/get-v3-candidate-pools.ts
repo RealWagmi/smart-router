@@ -1,4 +1,4 @@
-import { BigintIsh, Currency, ChainId } from '@real-wagmi/sdk'
+import { BigintIsh, Currency } from '@real-wagmi/sdk'
 import memoize from 'lodash/memoize'
 import { Address } from 'viem'
 
@@ -67,25 +67,25 @@ const getV3PoolsWithTvlFromOnChain = v3PoolsOnChainProviderFactory((params: Para
   return getV3PoolSubgraph({ provider: subgraphProvider, pairs })
 })
 
-const createFallbackTvlRefGetter = () => {
-  const cache = new Map<ChainId, V3PoolTvlReference[]>()
-  return async (params: Params) => {
-    const { currencyA } = params
-    if (!currencyA?.chainId) {
-      throw new Error(`Cannot get tvl references at chain ${currencyA?.chainId}`)
-    }
-    const cached = cache.get(currencyA.chainId)
-    if (cached) {
-      return cached
-    }
-    const res = await fetch(`https://routing-api.wagmi.com/v0/v3-pools-tvl/${currencyA.chainId}`)
-    const refs: V3PoolTvlReference[] = await res.json()
-    cache.set(currencyA.chainId, refs)
-    return refs
-  }
-}
+// const createFallbackTvlRefGetter = () => {
+//   const cache = new Map<ChainId, V3PoolTvlReference[]>()
+//   return async (params: Params) => {
+//     const { currencyA } = params
+//     if (!currencyA?.chainId) {
+//       throw new Error(`Cannot get tvl references at chain ${currencyA?.chainId}`)
+//     }
+//     const cached = cache.get(currencyA.chainId)
+//     if (cached) {
+//       return cached
+//     }
+//     const res = await fetch(`https://routing-api.wagmi.com/v0/v3-pools-tvl/${currencyA.chainId}`)
+//     const refs: V3PoolTvlReference[] = await res.json()
+//     cache.set(currencyA.chainId, refs)
+//     return refs
+//   }
+// }
 
-const getV3PoolsWithTvlFromOnChainFallback = v3PoolsOnChainProviderFactory(createFallbackTvlRefGetter())
+// const getV3PoolsWithTvlFromOnChainFallback = v3PoolsOnChainProviderFactory(createFallbackTvlRefGetter())
 
 export async function getV3CandidatePools(params: Params) {
   const { currencyA, currencyB, pairs: providedPairs, subgraphProvider } = params
@@ -97,11 +97,11 @@ export async function getV3CandidatePools(params: Params) {
       asyncFn: () => getV3PoolsWithTvlFromOnChain(params),
       timeout: 3000,
     },
-    // Fallback to get pools from on chain and ref tvl by subgraph cache
-    {
-      asyncFn: () => getV3PoolsWithTvlFromOnChainFallback(params),
-      timeout: 3000,
-    },
+    // // Fallback to get pools from on chain and ref tvl by subgraph cache (TODO: not working yet)
+    // {
+    //   asyncFn: () => getV3PoolsWithTvlFromOnChainFallback(params),
+    //   timeout: 3000,
+    // },
     // Fallback to get all pools info from subgraph
     {
       asyncFn: () => getV3PoolSubgraph({ provider: subgraphProvider, pairs }),
