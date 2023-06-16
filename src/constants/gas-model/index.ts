@@ -7,5 +7,5 @@ export const nativeWrappedTokenByChain: { [chainId in ChainId]?: Token } = {
 
 export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
     [ChainId.FANTOM]: [fantomTokens.usdc],
-    [ChainId.ZK_SYNC]: [fantomTokens.usdc],
+    [ChainId.ZK_SYNC]: [zkSyncTokens.usdc],
 };
