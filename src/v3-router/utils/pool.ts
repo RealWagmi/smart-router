@@ -40,8 +40,8 @@ export const getPoolAddress = memoize(
         return '';
     },
     pool => {
-        const [token0, token1] = [pool.token0.wrapped, pool.token1.wrapped];
-        return `${token0.chainId}_${token0.address}_${token1.address}`;
+        const [token0, token1, fee] = [pool.token0.wrapped, pool.token1.wrapped, pool.fee];
+        return `${token0.chainId}_${token0.address}_${token1.address}_${fee}`;
     },
 );
 
