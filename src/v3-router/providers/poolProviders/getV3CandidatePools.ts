@@ -1,6 +1,6 @@
 import { ChainId, BigintIsh, Currency } from '@real-wagmi/sdk'
-import memoize from 'lodash/memoize.js'
-import { Address } from 'viem'
+// import memoize from 'lodash/memoize.js'
+// import { Address } from 'viem'
 
 import { OnChainProvider, SubgraphProvider, V3PoolWithTvl } from '../../types'
 import { createAsyncCallWithFallbacks, WithFallbackOptions } from '../../../utils/withFallback'
@@ -36,13 +36,13 @@ export interface V3PoolTvlReference extends Pick<V3PoolWithTvl, 'address'> {
   tvlUSD: bigint | string
 }
 
-const getV3PoolTvl = memoize(
-  (pools: V3PoolTvlReference[], poolAddress: Address) => {
-    const poolWithTvl = pools.find((p) => p.address === poolAddress)
-    return poolWithTvl?.tvlUSD || 0n
-  },
-  (_, poolAddress) => poolAddress,
-)
+// const getV3PoolTvl = memoize(
+//   (pools: V3PoolTvlReference[], poolAddress: Address) => {
+//     const poolWithTvl = pools.find((p) => p.address === poolAddress)
+//     return poolWithTvl?.tvlUSD || 0n
+//   },
+//   (_, poolAddress) => poolAddress,
+// )
 
 // Get pools from onchain and use the tvl data from subgraph as reference
 // The reason we do this is the data from subgraph might delay
@@ -61,12 +61,12 @@ export const v3PoolsOnChainProviderFactory = <P extends GetV3PoolsParams = GetV3
     if (fromOnChain.status === 'fulfilled' && tvlReference.status === 'fulfilled') {
       const { value: poolsFromOnChain } = fromOnChain
       // Need create tvl api
-      const { value: poolTvlReferences = [] } = tvlReference
-      if (!Array.isArray(poolTvlReferences)) {
-        throw new Error('Failed to get tvl references')
-      }
+      //const { value: poolTvlReferences = [] } = tvlReference
+      // if (!Array.isArray(poolTvlReferences)) {
+      //   throw new Error('Failed to get tvl references')
+      // }
       return poolsFromOnChain.map((pool) => {
-        const tvlUSD = BigInt(getV3PoolTvl(poolTvlReferences, pool.address))
+        const tvlUSD = 0n; //BigInt(getV3PoolTvl(poolTvlReferences, pool.address))
         return {
           ...pool,
           tvlUSD,
