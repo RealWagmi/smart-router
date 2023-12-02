@@ -121,7 +121,7 @@ const queryV3Pools = gql`
       sqrtPrice
       feeTier
       liquidity
-      feeProtocol
+      # feeProtocol
       totalValueLockedUSD
     }
   }
@@ -135,8 +135,8 @@ export const getV3PoolSubgraph = subgraphPoolProviderFactory<V3PoolMeta, V3PoolW
       pageSize: 1000,
       poolAddrs: addresses,
     })
-
-    return poolsFromSubgraph.map(({ id, liquidity, sqrtPrice, tick, totalValueLockedUSD, feeProtocol }) => {
+    // Need added feeProtocol to graph
+    return poolsFromSubgraph.map(({ id, liquidity, sqrtPrice, tick, totalValueLockedUSD, feeProtocol = 0 }) => {
       const meta = getPoolMetaByAddress(id as Address)
       if (!meta) {
         return null
