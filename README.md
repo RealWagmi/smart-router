@@ -1,103 +1,114 @@
-# TSDX User Guide
+# Pancakeswap Smart Router
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
+`@pancakeswap/smart-router` is a SDK for getting best trade routes from Pancakeswap AMM.
 
-> This TSDX setup is meant for developing libraries (not apps!) that can be published to NPM. If you’re looking to build a Node app, you could use `ts-node-dev`, plain `ts-node`, or simple `tsc`.
-
-> If you’re new to TypeScript, checkout [this handy cheatsheet](https://devhints.io/typescript)
-
-## Commands
-
-TSDX scaffolds your new library inside `/src`.
-
-To run TSDX, use:
+## Install
 
 ```bash
-npm start # or yarn start
+$ pnpm add @pancakeswap/smart-router
 ```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+## Usage
 
-To do a one-off build, use `npm run build` or `yarn build`.
+Use BSC as an example. Here's how we use smart router sdk to find the best trade route swapping from BNB to CAKE and construct a valid swap transaction from the trade route we got.
 
-To run tests, use `npm test` or `yarn test`.
+For working code example, please refer to [smart-router-example](https://github.com/pancakeswap/smart-router-example).
 
-## Configuration
+0. Install other dependencies
 
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
-
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`.
-
-### Bundle Analysis
-
-[`size-limit`](https://github.com/ai/size-limit) is set up to calculate the real cost of your library with `npm run size` and visualize the bundle with `npm run analyze`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
+```bash
+$ pnpm add viem graphql-request @pancakeswap/sdk @pancakeswap/tokens
 ```
 
-### Rollup
+1. Prepare on-chain rpc provider and subgraph providers
 
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
+```typescript
+import { createPublicClient, http } from 'viem'
+import { GraphQLClient } from 'graphql-request'
+import { SmartRouter } from '@pancakeswap/smart-router/evm'
 
-### TypeScript
+const publicClient = createPublicClient({
+  chain: mainnet,
+  transport: http('https://bsc-dataseed1.binance.org'),
+  batch: {
+    multicall: {
+      batchSize: 1024 * 200,
+    },
+  },
+})
 
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
+const v3SubgraphClient = new GraphQLClient('https://api.thegraph.com/subgraphs/name/pancakeswap/exchange-v3-bsc')
+const v2SubgraphClient = new GraphQLClient('https://proxy-worker-api.pancakeswap.com/bsc-exchange')
 
-## Continuous Integration
+const quoteProvider = SmartRouter.createQuoteProvider({ onChainProvider: () => publicClient })
+```
 
-### GitHub Actions
+2. Get candidate pools
 
-Two actions are added by default:
+```typescript
+import { Native } from '@pancakeswap/sdk'
+import { SmartRouter } from '@pancakeswap/smart-router/evm'
+import { bscTokens } from '@pancakeswap/tokens'
 
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
+const swapFrom = Native.onChain(chainId)
+const swapTo = bscTokens.cake
 
-## Optimizations
+const [v2Pools, v3Pools] = await Promise.all([
+  SmartRouter.getV2CandidatePools({
+    onChainProvider: () => publicClient,
+    v2SubgraphProvider: () => v2SubgraphClient,
+    v3SubgraphProvider: () => v3SubgraphClient,
+    currencyA: swapFrom,
+    currencyB: swapTo,
+  }),
+  SmartRouter.getV3CandidatePools({
+    onChainProvider: () => publicClient,
+    subgraphProvider: () => v3SubgraphClient,
+    currencyA: swapFrom,
+    currencyB: swapTo,
+  }),
+])
+```
 
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
+3. Find the best swap trade route
 
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
+```typescript
+import { CurrencyAmount, TradeType } from '@pancakeswap/sdk'
 
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
+// 0.01 BNB in our example
+const amount = CurrencyAmount.fromRawAmount(swapFrom, 10 ** 16)
+
+const trade = await SmartRouter.getBestTrade(amount, swapTo, TradeType.EXACT_INPUT, {
+  gasPriceWei: () => publicClient.getGasPrice(),
+  maxHops: 2,
+  maxSplits: 2,
+  poolProvider: SmartRouter.createStaticPoolProvider(pools),
+  quoteProvider,
+  quoterOptimization: true,
+})
+```
+
+4. Build the swap transaction from trade
+
+```typescript
+import { ChainId } from '@pancakeswap/chains'
+import { SmartRouter, SmartRouterTrade, SMART_ROUTER_ADDRESSES, SwapRouter } from '@pancakeswap/smart-router/evm'
+import { hexToBigInt } from 'viem'
+
+const routerAddress = SMART_ROUTER_ADDRESSES[ChainId.BSC]
+// Swap recipient address
+const address = '0x'
+
+const { value, calldata } = SwapRouter.swapCallParameters(trade, {
+  recipient: address,
+  slippageTolerance: new Percent(1),
+})
+
+const tx = {
+  account: address,
+  to: routerAddress,
+  data: calldata,
+  value: hexToBigInt(value),
 }
+const gasEstimate = await publicClient.estimateGas(tx)
 ```
-
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
-
-## Module Formats
-
-CJS, ESModules, and UMD module formats are supported.
-
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
-
-## Named Exports
-
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
-
-## Including Styles
-
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
-
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
-
-## Publishing to NPM
-
-We recommend using [np](https://github.com/sindresorhus/np).

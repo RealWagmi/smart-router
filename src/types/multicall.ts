@@ -1,10 +1,10 @@
-export interface BatchMulticallConfig {
-    gasLimitOverride: number;
-    multicallChunk: number;
+export type BatchMulticallConfig = {
+  gasLimitPerCall: number
+  dropUnexecutedCalls?: boolean
 }
 
-export interface BatchMulticallConfigs {
-    defaultConfig: BatchMulticallConfig;
-    gasErrorFailureOverride: BatchMulticallConfig;
-    successRateFailureOverrides: BatchMulticallConfig;
+export type BatchMulticallConfigs = {
+  defaultConfig: BatchMulticallConfig
+  gasErrorFailureOverride: BatchMulticallConfig
+  successRateFailureOverrides: BatchMulticallConfig
 }

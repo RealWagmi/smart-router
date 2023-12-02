@@ -1,34 +1,49 @@
-import { ChainId } from '@real-wagmi/sdk';
+import { ChainId } from '@real-wagmi/sdk'
 
-import { ChainMap, BatchMulticallConfigs } from '../types';
+import { ChainMap, BatchMulticallConfigs } from '../types'
+
+const DEFAULT: BatchMulticallConfigs = {
+  defaultConfig: {
+    gasLimitPerCall: 1_000_000,
+  },
+  gasErrorFailureOverride: {
+    gasLimitPerCall: 2_000_000,
+  },
+  successRateFailureOverrides: {
+    gasLimitPerCall: 2_000_000,
+  },
+}
 
 export const BATCH_MULTICALL_CONFIGS: ChainMap<BatchMulticallConfigs> = {
-    [ChainId.ZK_SYNC]: {
-        defaultConfig: {
-            multicallChunk: 50,
-            gasLimitOverride: 1_000_000,
-        },
-        gasErrorFailureOverride: {
-            gasLimitOverride: 1_000_000,
-            multicallChunk: 40,
-        },
-        successRateFailureOverrides: {
-            gasLimitOverride: 1_000_000,
-            multicallChunk: 45,
-        },
+  [ChainId.ETHEREUM]: DEFAULT,
+  [ChainId.OPTIMISM]: {
+    ...DEFAULT,
+    defaultConfig: {
+      ...DEFAULT.defaultConfig,
+      gasLimitPerCall: 1_200_000,
+    }
+  },
+  [ChainId.BSC]: DEFAULT,
+  [ChainId.POLYGON]: DEFAULT,
+  [ChainId.FANTOM]: DEFAULT,
+  [ChainId.ZKSYNC]: {
+    ...DEFAULT,
+    successRateFailureOverrides: {
+      ...DEFAULT.successRateFailureOverrides,
+      gasLimitPerCall: 3_000_000,
+    }
+  },
+  [ChainId.KAVA]: {
+    defaultConfig: {
+      gasLimitPerCall: 5_000_000,
     },
-    [ChainId.FANTOM]: {
-        defaultConfig: {
-            multicallChunk: 150,
-            gasLimitOverride: 1_000_000,
-        },
-        gasErrorFailureOverride: {
-            gasLimitOverride: 1_000_000,
-            multicallChunk: 30,
-        },
-        successRateFailureOverrides: {
-            gasLimitOverride: 1_000_000,
-            multicallChunk: 40,
-        },
+    gasErrorFailureOverride: {
+      gasLimitPerCall: 5_000_000,
     },
-};
+    successRateFailureOverrides: {
+      gasLimitPerCall: 3_000_000,
+    },
+  },
+  [ChainId.AVALANCHE]: DEFAULT,
+  [ChainId.ARBITRUM]: DEFAULT,  
+}

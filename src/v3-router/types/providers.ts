@@ -1,10 +1,12 @@
+import { Currency, BigintIsh, ChainId } from '@real-wagmi/sdk'
 import { PublicClient } from 'viem'
 import type { GraphQLClient } from 'graphql-request'
-import { Currency, BigintIsh, ChainId } from '@real-wagmi/sdk'
+import type { Options as RetryOptions } from 'async-retry'
 
 import { Pool, PoolType } from './pool'
 import { RouteWithoutQuote, RouteWithQuote } from './route'
-import { GasModel } from './gas-model'
+import { GasModel } from './gasModel'
+import { BatchMulticallConfigs, ChainMap } from '../../types'
 
 interface GetPoolParams {
   currencyA?: Currency
@@ -20,16 +22,27 @@ export interface PoolProvider {
   getCandidatePools: (params: GetPoolParams) => Promise<Pool[]>
 }
 
+export type QuoteRetryOptions = RetryOptions
+
 export interface QuoterOptions {
   blockNumber?: BigintIsh
   gasModel: GasModel
+  retry?: QuoteRetryOptions
 }
 
-export interface QuoteProvider {
+export type QuoterConfig = {
+  onChainProvider: OnChainProvider
+  gasLimit?: BigintIsh
+  multicallConfigs?: ChainMap<BatchMulticallConfigs>
+}
+
+export interface QuoteProvider<C = any> {
   getRouteWithQuotesExactIn: (routes: RouteWithoutQuote[], options: QuoterOptions) => Promise<RouteWithQuote[]>
   getRouteWithQuotesExactOut: (routes: RouteWithoutQuote[], options: QuoterOptions) => Promise<RouteWithQuote[]>
+
+  getConfig?: () => C
 }
 
 export type OnChainProvider = ({ chainId }: { chainId?: ChainId }) => PublicClient
 
-export type SubgraphProvider = ({ chainId }: { chainId?: ChainId }) => GraphQLClient
+export type SubgraphProvider = ({ chainId }: { chainId?: ChainId }) => GraphQLClient | undefined

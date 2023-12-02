@@ -1,4 +1,4 @@
-import debug from 'debug';
+import debug from 'debug'
 
-export const metric = debug('smart-router:metric');
-export const log = debug('smart-router:log');
+export const metric = debug('smart-router:metric')
+export const log = debug('smart-router:log')

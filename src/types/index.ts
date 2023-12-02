@@ -1,2 +1,2 @@
-export * from './chain';
-export * from './multicall';
+export * from './chain'
+export * from './multicall'
