@@ -60,7 +60,8 @@ export const v3PoolsOnChainProviderFactory = <P extends GetV3PoolsParams = GetV3
 
     if (fromOnChain.status === 'fulfilled' && tvlReference.status === 'fulfilled') {
       const { value: poolsFromOnChain } = fromOnChain
-      const { value: poolTvlReferences } = tvlReference
+      // Need create tvl api
+      const { value: poolTvlReferences = [] } = tvlReference
       if (!Array.isArray(poolTvlReferences)) {
         throw new Error('Failed to get tvl references')
       }
