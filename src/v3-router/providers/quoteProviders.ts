@@ -25,10 +25,6 @@ export function createQuoteProvider(config: QuoterConfig): QuoteProvider<QuoterC
       const v3MultihopRoutes: RouteWithoutQuote[] = []
       const routesCanQuoteOffChain: RouteWithoutQuote[] = []
       for (const route of routes) {
-        if (route.type === RouteType.V2 || route.type === RouteType.STABLE) {
-          routesCanQuoteOffChain.push(route)
-          continue
-        }
         if (route.type === RouteType.V3) {
           if (route.pools.length === 1) {
             v3SingleHopRoutes.push(route)

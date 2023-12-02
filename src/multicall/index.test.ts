@@ -8,8 +8,6 @@ test('exports', () => {
       "getDefaultGasBuffer",
       "getGasLimitOnChain",
       "getGasLimit",
-      "iMulticallABI",
-      "multicall3ABI",
       "MULTICALL_ADDRESS",
       "MULTICALL3_ADDRESS",
       "MULTICALL3_ADDRESSES",
