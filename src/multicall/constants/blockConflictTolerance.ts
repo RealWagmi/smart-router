@@ -8,5 +8,6 @@ export const BLOCK_CONFLICT_TOLERANCE: { [key in ChainId]?: number } = {
   [ChainId.ARBITRUM]: 5,
   [ChainId.POLYGON]: 1,
   [ChainId.ZKSYNC]: 3,
-  [ChainId.OPTIMISM]: 10
+  [ChainId.OPTIMISM]: 10,
+  [ChainId.KAVA]: 3
 }
