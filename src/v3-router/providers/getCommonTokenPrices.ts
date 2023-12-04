@@ -9,9 +9,12 @@ import { withFallback } from '../../utils/withFallback'
 
 const tokenPriceQuery = gql`
   query getTokens($pageSize: Int!, $tokenAddrs: [ID!]) {
+    bundle(id: "1") {
+      ethPriceUSD
+    }
     tokens(first: $pageSize, where: { id_in: $tokenAddrs }) {
       id
-      derivedUSD
+      derivedETH
     }
   }
 `
@@ -77,16 +80,19 @@ export const getTokenUsdPricesBySubgraph: GetTokenPrices<BySubgraphEssentials> =
   if (!client) {
     throw new Error('No valid subgraph data provider')
   }
-  const { tokens: tokenPrices } = await client.request<{ tokens: { id: string; derivedUSD: string }[] }>(
+  const { bundle, tokens: tokenPrices } = await client.request<{ bundle: { ethPriceUSD: string }, tokens: { id: string; derivedETH: string }[] }>(
     tokenPriceQuery,
     {
       pageSize: 1000,
       tokenAddrs: addresses.map((addr) => addr.toLocaleLowerCase()),
     },
   )
-  return tokenPrices.map(({ id, derivedUSD }) => ({
+  
+  const nativePrice = parseFloat(bundle.ethPriceUSD);
+
+  return tokenPrices.map(({ id, derivedETH }) => ({
     address: id,
-    priceUSD: derivedUSD,
+    priceUSD: (nativePrice * parseFloat(derivedETH)).toString(),
   }))
 }
 
@@ -150,20 +156,9 @@ export const getCommonTokenPricesByLlma = createCommonTokenPriceProvider<BySubgr
   }),
 )
 
-export const getCommonTokenPricesByWalletApi = createCommonTokenPriceProvider<BySubgraphEssentials>(
-  createGetTokenPriceFromLlmaWithCache({
-    endpoint: 'https://alpha.wallet-api.pancakeswap.com/v0/prices',
-  }),
-)
-
 export const getCommonTokenPrices = withFallback([
   {
     asyncFn: ({ currencyA, currencyB }: ParamsWithFallback) => getCommonTokenPricesByLlma({ currencyA, currencyB }),
-    timeout: 3000,
-  },
-  {
-    asyncFn: ({ currencyA, currencyB }: ParamsWithFallback) =>
-      getCommonTokenPricesByWalletApi({ currencyA, currencyB }),
     timeout: 3000,
   },
   {

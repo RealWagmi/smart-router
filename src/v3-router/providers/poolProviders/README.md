@@ -15,7 +15,7 @@ Therefore, the smart router sdk is also designed in a way to open the possibilit
 1. Define v3 pool on-chain fetcher with customized tvl references
 
 ```typescript
-import { SmartRouter } from '@pancakeswap/smart-router/evm'
+import { SmartRouter } from '@real-wagmi/smart-router'
 
 const { v3PoolsOnChainProviderFactory } = SmartRouter
 
@@ -36,7 +36,7 @@ const getV3PoolsWithCustomizedTvlReferences = v3PoolsOnChainProviderFactory((par
 In case your customized v3 pool fetcher suffers downtime, you can specify several fallback fetchers to guarantee the reliability of your service.
 
 ```typescript
-import { SmartRouter } from '@pancakeswap/smart-router/evm'
+import { SmartRouter } from '@real-wagmi/smart-router'
 
 const { createGetV3CandidatePools, getV3PoolsWithTvlFromOnChainFallback } = SmartRouter
 
@@ -54,50 +54,4 @@ const getV3CandidatePools = createGetV3CandidatePools(
 
 // For the detailed params type definition pls refer to `GetV3PoolsParams`
 const v3Pools = await getV3CandidatePools(params)
-```
-
-### Customize V2 Pool Provider
-
-For pool tvl references of v2 pools, smart router is using token reserves and token usd prices to roughly estimate the overall tvl of the pool. By default, token prices are fetched from subgraph.
-
-Smart router allows you to customize to use your own source of token price to improve the reliability of the service.
-
-1. Create token price provider with customized data source
-
-```typescript
-import { SmartRouter } from '@pancakeswap/smart-router/evm'
-
-const { createCommonTokenPriceProvider } = SmartRouter
-
-const getCommonTokenPricesFromOwnSource = createCommonTokenPriceProvider(
-  // The addresses are all checksum encoded
-  // For the function type definition pls refer to `GetTokenPrices`
-  ({ addresses, chainId }) => getTokenPricesFromOwnDataSource(addresses, chainId),
-)
-```
-
-2. Create v2 pool on-chain fetcher with customized token price provider
-
-```typescript
-import { SmartRouter } from '@pancakeswap/smart-router/evm'
-
-const { createV2PoolsProviderByCommonTokenPrices } = SmartRouter
-
-const getV2PoolsByCommonTokenPrices = createV2PoolsProviderByCommonTokenPrices(getCommonTokenPricesFromOwnSource)
-```
-
-3. Create v2 candidate pool fetcher with your own on-chain fetcher
-
-```typescript
-import { SmartRouter } from '@pancakeswap/smart-router/evm'
-
-const { createGetV2CandidatePools } = SmartRouter
-
-const getV2CandidatePools = createGetV2CandidatePools(
-  // Use your customized v3 pool fetcher by default
-  getV2PoolsByCommonTokenPrices,
-)
-
-// For the detailed params type definition pls refer to `GetV2PoolsParams`
-const v2Pools = await getV2CandidatePools(params)
 ```
