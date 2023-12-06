@@ -1,5 +1,5 @@
 import { ChainId, Currency, Token } from '@real-wagmi/sdk'
-import { parseProtocolFees, Pool, FeeAmount } from '@real-wagmi/v3-sdk'
+import { parseProtocolFees, Pool, FeeAmount, feeAmounts } from '@real-wagmi/v3-sdk'
 import { gql } from 'graphql-request'
 import type { GraphQLClient } from 'graphql-request'
 import memoize from 'lodash/memoize.js'
@@ -91,7 +91,7 @@ const getV3PoolMeta = memoize(
 
 const getV3PoolMetas = memoize(
   (pair: [Currency, Currency]) =>
-    [FeeAmount.LOWEST, FeeAmount.LOW, FeeAmount.MEDIUM, FeeAmount.HIGH].map((fee) => getV3PoolMeta([...pair, fee])),
+    feeAmounts.map((fee) => getV3PoolMeta([...pair, fee])),
   ([currencyA, currencyB]) => {
     if (currencyA.wrapped.equals(currencyB.wrapped)) {
       return [currencyA.chainId, currencyA.wrapped.address].join('_')
