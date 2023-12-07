@@ -115,7 +115,7 @@ const createGetTokenPriceFromLlmaWithCache = ({
     }
     const [cachedResults, addressesToFetch] = addresses.reduce<[TokenUsdPrice[], string[]]>(
       ([cachedAddrs, newAddrs], address) => {
-        const cached = cache.get(address)
+        const cached = cache.get(`${chainId}-${address}`)
         if (!cached) {
           newAddrs.push(address)
         } else {
@@ -143,7 +143,7 @@ const createGetTokenPriceFromLlmaWithCache = ({
       ...Object.entries(coins).map(([key, value]) => {
         const [, address] = key.split(':')
         const tokenPrice = { address, priceUSD: value.price }
-        cache.set(getAddress(address), tokenPrice)
+        cache.set(`${chainId}-${getAddress(address)}`, tokenPrice)
         return tokenPrice
       }),
     ]
@@ -156,9 +156,20 @@ export const getCommonTokenPricesByLlma = createCommonTokenPriceProvider<BySubgr
   }),
 )
 
+export const getCommonTokenPricesByWalletApi = createCommonTokenPriceProvider<BySubgraphEssentials>(
+  createGetTokenPriceFromLlmaWithCache({
+    endpoint: 'https://api.wagmi.com/prices/current',
+  }),
+)
+
 export const getCommonTokenPrices = withFallback([
   {
     asyncFn: ({ currencyA, currencyB }: ParamsWithFallback) => getCommonTokenPricesByLlma({ currencyA, currencyB }),
+    timeout: 3000,
+  },
+  {
+    asyncFn: ({ currencyA, currencyB }: ParamsWithFallback) =>
+      getCommonTokenPricesByWalletApi({ currencyA, currencyB }),
     timeout: 3000,
   },
   {
