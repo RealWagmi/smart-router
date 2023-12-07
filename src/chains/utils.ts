@@ -5,7 +5,7 @@ export function getLlamaChainName(chainId: ChainId) {
   return defiLlamaChainNames[chainId]
 }
 
-export function getChainFromLlamaChainName(chain: string){
+export function getChainFromLlamaChainName(chain: string): ChainId {
   //@ts-ignore
-  return Object.keys(defiLlamaChainNames).find(key => defiLlamaChainNames[key] === chain); 
+  return Object.keys(defiLlamaChainNames).filter((chain) => !isNaN(Number(chain))).find(key => defiLlamaChainNames[key] === chain); 
 }
