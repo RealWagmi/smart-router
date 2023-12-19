@@ -1,4 +1,4 @@
-import { Token, ChainId, arbitrumTokens, ethereumTokens, fantomTokens, kavaTokens, zkSyncTokens, optimismTokens, bscTokens, polygonTokens, avalancheTokens } from '@real-wagmi/sdk';
+import { Token, ChainId, arbitrumTokens, ethereumTokens, fantomTokens, kavaTokens, zkSyncTokens, optimismTokens, bscTokens, polygonTokens, avalancheTokens, metisTokens } from '@real-wagmi/sdk';
 
 export const usdGasTokensByChain = {
   [ChainId.ETHEREUM]: [ethereumTokens.usdc, ethereumTokens.usdt],
@@ -9,7 +9,8 @@ export const usdGasTokensByChain = {
   [ChainId.ZKSYNC]: [zkSyncTokens.usdc, zkSyncTokens.busd],
   [ChainId.KAVA]: [kavaTokens.usdt, kavaTokens.usdc],
   [ChainId.AVALANCHE]: [avalancheTokens.usdc, avalancheTokens.usdt],
-  [ChainId.ARBITRUM]: [arbitrumTokens.usdc, arbitrumTokens.usdt],  
+  [ChainId.ARBITRUM]: [arbitrumTokens.usdc, arbitrumTokens.usdt],
+  [ChainId.METIS]: [metisTokens.usdc, metisTokens.usdt]
 } satisfies Record<ChainId, Token[]>
 
 export * from './v3';

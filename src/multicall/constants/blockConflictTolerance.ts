@@ -9,5 +9,6 @@ export const BLOCK_CONFLICT_TOLERANCE: { [key in ChainId]?: number } = {
   [ChainId.POLYGON]: 1,
   [ChainId.ZKSYNC]: 3,
   [ChainId.OPTIMISM]: 10,
-  [ChainId.KAVA]: 3
+  [ChainId.KAVA]: 3,
+  [ChainId.METIS]: 5
 }

@@ -1,4 +1,4 @@
-import { Token, ChainId, ethereumTokens, optimismTokens, bscTokens, polygonTokens, fantomTokens, zkSyncTokens, kavaTokens, avalancheTokens, arbitrumTokens } from '@real-wagmi/sdk'
+import { Token, ChainId, ethereumTokens, optimismTokens, bscTokens, polygonTokens, fantomTokens, zkSyncTokens, kavaTokens, avalancheTokens, arbitrumTokens, metisTokens } from '@real-wagmi/sdk'
 import { ChainMap, ChainTokenList } from '../types'
 
 export const SMART_ROUTER_ADDRESSES: ChainMap<string> = {
@@ -10,7 +10,8 @@ export const SMART_ROUTER_ADDRESSES: ChainMap<string> = {
   [ChainId.OPTIMISM]: '0x49660491C29344C3C8E463Ed1867A68fb69Bb519',
   [ChainId.BSC]: '',
   [ChainId.POLYGON]: '',
-  [ChainId.AVALANCHE]: ''
+  [ChainId.AVALANCHE]: '',
+  [ChainId.METIS]: '0x8B741B0D79BE80E135C880F7583d427B4D41F015'
 }
 
 // used to construct intermediary pairs for trading
@@ -23,7 +24,8 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   [ChainId.ZKSYNC]: [zkSyncTokens.weth, zkSyncTokens.usdc, zkSyncTokens.busd],
   [ChainId.KAVA]: [kavaTokens.wkava, kavaTokens.usdt, kavaTokens.usdc, kavaTokens.weth],
   [ChainId.AVALANCHE]: [avalancheTokens.wavax, avalancheTokens.usdc, avalancheTokens.usdt],
-  [ChainId.ARBITRUM]: [arbitrumTokens.weth, arbitrumTokens.usdc, arbitrumTokens.usdt, arbitrumTokens.wbtc],  
+  [ChainId.ARBITRUM]: [arbitrumTokens.weth, arbitrumTokens.usdc, arbitrumTokens.usdt, arbitrumTokens.wbtc],
+  [ChainId.METIS]: [metisTokens.wmetis, metisTokens.usdc, metisTokens.usdt, metisTokens.weth, metisTokens.wbtc]
 }
 
 /**

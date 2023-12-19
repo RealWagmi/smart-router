@@ -46,4 +46,5 @@ export const BATCH_MULTICALL_CONFIGS: ChainMap<BatchMulticallConfigs> = {
   },
   [ChainId.AVALANCHE]: DEFAULT,
   [ChainId.ARBITRUM]: DEFAULT,  
+  [ChainId.METIS]: DEFAULT
 }
