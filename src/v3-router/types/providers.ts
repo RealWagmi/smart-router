@@ -7,8 +7,9 @@ import { Pool, PoolType } from './pool'
 import { RouteWithoutQuote, RouteWithQuote } from './route'
 import { GasModel } from './gasModel'
 import { BatchMulticallConfigs, ChainMap } from '../../types'
+import { AbortControl } from '../../utils/abortControl'
 
-interface GetPoolParams {
+type GetPoolParams = {
   currencyA?: Currency
   currencyB?: Currency
   blockNumber?: BigintIsh
@@ -16,7 +17,7 @@ interface GetPoolParams {
 
   // Only use this param if we want to specify pairs we want to get
   pairs?: [Currency, Currency][]
-}
+} & AbortControl
 
 export interface PoolProvider {
   getCandidatePools: (params: GetPoolParams) => Promise<Pool[]>
@@ -24,11 +25,11 @@ export interface PoolProvider {
 
 export type QuoteRetryOptions = RetryOptions
 
-export interface QuoterOptions {
+export type QuoterOptions = {
   blockNumber?: BigintIsh
   gasModel: GasModel
   retry?: QuoteRetryOptions
-}
+} & AbortControl
 
 export type QuoterConfig = {
   onChainProvider: OnChainProvider

@@ -3,6 +3,7 @@ import { BigintIsh, Currency, CurrencyAmount, TradeType } from '@real-wagmi/sdk'
 import { Route } from './route'
 import { PoolProvider, QuoteProvider } from './providers'
 import { PoolType } from './pool'
+import { AbortControl } from '../../utils/abortControl'
 
 export interface SmartRouterTrade<TTradeType extends TradeType> {
   tradeType: TTradeType
@@ -17,7 +18,12 @@ export interface SmartRouterTrade<TTradeType extends TradeType> {
   blockNumber?: number
 }
 
-export interface TradeConfig {
+export type PriceReferences = {
+  quoteCurrencyUsdPrice?: number
+  nativeCurrencyUsdPrice?: number
+}
+
+export type TradeConfig = {
   gasPriceWei: BigintIsh | (() => Promise<BigintIsh>)
   blockNumber?: number | (() => Promise<number>)
   poolProvider: PoolProvider
@@ -27,7 +33,7 @@ export interface TradeConfig {
   distributionPercent?: number
   allowedPoolTypes?: PoolType[]
   quoterOptimization?: boolean
-}
+} & PriceReferences & AbortControl
 
 export interface RouteConfig extends TradeConfig {
   blockNumber?: number

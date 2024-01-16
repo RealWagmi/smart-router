@@ -4,8 +4,9 @@ import { GetGasLimitParams, getDefaultGasBuffer, getGasLimit } from './getGasLim
 import { MulticallRequestWithGas } from './types'
 import { getMulticallContract } from './getMulticallContract'
 import { getBlockConflictTolerance } from './getBlockConflictTolerance'
+import { AbortControl, abortInvariant } from '../utils/abortControl'
 
-export type CallByGasLimitParams = GetGasLimitParams & {
+export type CallByGasLimitParams = AbortControl & GetGasLimitParams & {
   // Normally we expect to get quotes from within the same block
   // But for some chains like BSC the block time is quite short so need some extra tolerance
   // 0 means no block conflict and all the multicall results should be queried within the same block
@@ -31,7 +32,7 @@ export async function multicallByGasLimit(
 
 type CallParams = Pick<
   CallByGasLimitParams,
-  'chainId' | 'client' | 'gasBuffer' | 'blockConflictTolerance' | 'dropUnexecutedCalls'
+  'chainId' | 'client' | 'gasBuffer' | 'blockConflictTolerance' | 'dropUnexecutedCalls' | 'signal'
 >
 
 export type SingleCallResult = {
@@ -72,6 +73,7 @@ async function call(calls: MulticallRequestWithGas[], params: CallParams): Promi
     gasBuffer = getDefaultGasBuffer(chainId),
     blockConflictTolerance = getBlockConflictTolerance(chainId),
     dropUnexecutedCalls = false,
+    signal
   } = params
   if (!calls.length) {
     return {
@@ -79,6 +81,8 @@ async function call(calls: MulticallRequestWithGas[], params: CallParams): Promi
       blockNumber: 0n,
     }
   }
+  
+  abortInvariant(signal, 'Multicall aborted')
 
   const contract = getMulticallContract({ chainId, client })
   const { result } = await contract.simulate.multicallWithGasLimitation([calls, gasBuffer])

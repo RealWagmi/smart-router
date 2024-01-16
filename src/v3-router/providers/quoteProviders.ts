@@ -19,7 +19,7 @@ export function createQuoteProvider(config: QuoterConfig): QuoteProvider<QuoterC
 
     return async function getRoutesWithQuotes(
       routes: RouteWithoutQuote[],
-      { blockNumber, gasModel }: QuoterOptions,
+      { blockNumber, gasModel, signal }: QuoterOptions,
     ): Promise<RouteWithQuote[]> {
       const v3SingleHopRoutes: RouteWithoutQuote[] = []
       const v3MultihopRoutes: RouteWithoutQuote[] = []
@@ -37,9 +37,9 @@ export function createQuoteProvider(config: QuoterConfig): QuoteProvider<QuoterC
       }
 
       const results = await Promise.allSettled([
-        getOffChainQuotes(routesCanQuoteOffChain, { blockNumber, gasModel }),
-        getV3Quotes(v3SingleHopRoutes, { blockNumber, gasModel }),
-        getV3Quotes(v3MultihopRoutes, { blockNumber, gasModel, retry: { retries: 1 } }),
+        getOffChainQuotes(routesCanQuoteOffChain, { blockNumber, gasModel, signal }),
+        getV3Quotes(v3SingleHopRoutes, { blockNumber, gasModel, signal }),
+        getV3Quotes(v3MultihopRoutes, { blockNumber, gasModel, retry: { retries: 1 }, signal }),
       ])
       if (results.every((result) => result.status === 'rejected')) {
         throw new Error(results.map((result) => (result as PromiseRejectedResult).reason).join(','))

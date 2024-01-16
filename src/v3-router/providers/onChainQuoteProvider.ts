@@ -19,6 +19,7 @@ import { PancakeMulticallProvider } from './multicallSwapProvider'
 import { V3_QUOTER_ADDRESSES } from '../../constants'
 import { BatchMulticallConfigs, ChainMap } from '../../types'
 import { BATCH_MULTICALL_CONFIGS } from '../../constants/multicall'
+import { AbortControl } from '../../utils/abortControl'
 
 const DEFAULT_BATCH_RETRIES = 2
 
@@ -86,7 +87,7 @@ interface GetQuotesConfig {
   gasLimitPerCall: number
 }
 
-const retryControllerFactory = ({ retries }: QuoteRetryOptions) => {
+const retryControllerFactory = ({ retries }: QuoteRetryOptions & AbortControl) => {
   const errors: Error[] = []
   let remainingRetries = retries || 0
   return {
@@ -112,7 +113,7 @@ function onChainQuoteProviderFactory({ getQuoteFunctionName, getQuoterAddress, a
 
       return async function getRoutesWithQuote(
         routes: RouteWithoutQuote[],
-        { blockNumber: blockNumberFromConfig, gasModel, retry: retryOptions }: QuoterOptions,
+        { blockNumber: blockNumberFromConfig, gasModel, retry: retryOptions, signal }: QuoterOptions,
       ): Promise<RouteWithQuote[]> {
         if (!routes.length) {
           return []
@@ -166,6 +167,7 @@ function onChainQuoteProviderFactory({ getQuoteFunctionName, getQuoterAddress, a
                   dropUnexecutedCalls,
                   gasLimitPerCall,
                   gasLimit,
+                  signal,
                 },
               })
             const successRateError = validateSuccessRate(results, minSuccessRate)

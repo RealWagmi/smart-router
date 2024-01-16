@@ -5,8 +5,9 @@ import chunk from 'lodash/chunk.js'
 import { BaseRoute, GasModel, QuoteProvider, RouteWithoutQuote, RouteWithQuote } from './types'
 import { getAmountDistribution } from './functions'
 import { metric } from './utils/metric'
+import { AbortControl } from '../utils/abortControl'
 
-interface Params {
+type Params = {
   blockNumber?: BigintIsh
   amount: CurrencyAmount<Currency>
   baseRoutes: BaseRoute[]
@@ -15,7 +16,7 @@ interface Params {
   tradeType: TradeType
   gasModel: GasModel
   quoterOptimization?: boolean
-}
+} & AbortControl
 
 export async function getRoutesWithValidQuote({
   amount,
@@ -26,6 +27,7 @@ export async function getRoutesWithValidQuote({
   blockNumber,
   gasModel,
   quoterOptimization = true,
+  signal,
 }: Params): Promise<RouteWithQuote[]> {
   const [percents, amounts] = getAmountDistribution(amount, distributionPercent)
   const routesWithoutQuote = amounts.reduce<RouteWithoutQuote[]>(
@@ -45,7 +47,7 @@ export async function getRoutesWithValidQuote({
       : quoteProvider.getRouteWithQuotesExactOut
 
   if (!quoterOptimization) {
-    return getRoutesWithQuote(routesWithoutQuote, { blockNumber, gasModel })
+    return getRoutesWithQuote(routesWithoutQuote, { blockNumber, gasModel, signal })
   }
 
   const requestCallback = typeof window === 'undefined' ? setTimeout : window.requestIdleCallback || window.setTimeout
@@ -55,7 +57,7 @@ export async function getRoutesWithValidQuote({
     new Promise((resolve, reject) => {
       requestCallback(async () => {
         try {
-          const result = await getRoutesWithQuote(routes, { blockNumber, gasModel })
+          const result = await getRoutesWithQuote(routes, { blockNumber, gasModel, signal })
           resolve(result)
         } catch (e) {
           reject(e)

@@ -12,6 +12,7 @@ import {
   IMulticallProvider,
   Result,
 } from './multicallProvider'
+import { AbortControl } from '../../utils/abortControl'
 
 export type PancakeMulticallConfig = {
   gasLimitPerCall?: BigintIsh
@@ -22,7 +23,7 @@ export type PancakeMulticallConfig = {
   gasBuffer?: BigintIsh
 
   dropUnexecutedCalls?: boolean
-}
+} & AbortControl
 
 /**
  * The PancakeswapMulticall contract has added functionality for limiting the amount of gas
@@ -74,6 +75,7 @@ export class PancakeMulticallProvider extends IMulticallProvider<PancakeMultical
       dropUnexecutedCalls: additionalConfig?.dropUnexecutedCalls,
       chainId: this.chainId,
       client: this.provider,
+      signal: additionalConfig?.signal,
     })
 
     const results: Result<TReturn>[] = []
@@ -154,6 +156,7 @@ export class PancakeMulticallProvider extends IMulticallProvider<PancakeMultical
       dropUnexecutedCalls: additionalConfig?.dropUnexecutedCalls,
       chainId: this.chainId,
       client: this.provider,
+      signal: additionalConfig?.signal,
     })
 
     const results: Result<TReturn>[] = []
@@ -232,6 +235,7 @@ export class PancakeMulticallProvider extends IMulticallProvider<PancakeMultical
       dropUnexecutedCalls: additionalConfig?.dropUnexecutedCalls,
       chainId: this.chainId,
       client: this.provider,
+      signal: additionalConfig?.signal,
     })
 
     const results: Result<TReturn>[] = []
