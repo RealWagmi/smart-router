@@ -8,8 +8,7 @@ export {
   isV3Pool,
   getMidPrice,
   involvesCurrency,
-  metric,
-  log,
+  logger,
   Transformer,
   getPoolAddress,
 } from './utils'
