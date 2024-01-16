@@ -90,6 +90,8 @@ export const zRouterPostParams = z
     blockNumber: zBigNumber.optional(),
     poolTypes: zPoolTypes.optional(),
     onChainQuoterGasLimit: zBigNumber.optional(),
+    nativeCurrencyUsdPrice: z.number().optional(),
+    quoteCurrencyUsdPrice: z.number().optional(),
   })
   .required({
     chainId: true,
