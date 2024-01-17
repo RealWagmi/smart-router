@@ -1385,6 +1385,18 @@
     toformat "^2.0.0"
     viem "^1.12.2"
 
+"@real-wagmi/sdk@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@real-wagmi/sdk/-/sdk-1.2.1.tgz#d83098cfe33656e5688e47e6232f25c5a5659242"
+  integrity sha512-Q8crAagZhtZOYDGsqXkwgRQX2cM66CXOcnCGlwMfMkmI/KNA7ehtXwmPYrMozl4m4y1R2obVZ426fpOK/6/Mbw==
+  dependencies:
+    "@uniswap/token-lists" "1.0.0-beta.33"
+    big.js "^6.2.1"
+    decimal.js-light "^2.5.1"
+    tiny-invariant "^1.3.1"
+    toformat "^2.0.0"
+    viem "^1.12.2"
+
 "@real-wagmi/v3-sdk@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@real-wagmi/v3-sdk/-/v3-sdk-1.2.0.tgz#8855be7204e6c6b427324ca1017a574a67e17118"
