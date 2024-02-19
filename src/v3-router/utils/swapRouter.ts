@@ -424,6 +424,20 @@ export abstract class SwapRouter {
    * @param options options for the call parameters
    */
   public static swapCallParameters(trades: AnyTradeType, options: SwapOptions): MethodParameters {
+    const { calldatas, value } = SwapRouter.swapCalldatas(trades, options);
+
+    return {
+      calldata: MulticallExtended.encodeMulticall(calldatas, options.deadlineOrPreviousBlockhash),
+      value,
+    }
+  }
+
+   /**
+   * Produces the on-chain method name to call and the hex encoded parameters to pass as arguments for a given trade.
+   * @param trades to produce call parameters for
+   * @param options options for the call parameters
+   */
+  public static swapCalldatas(trades: AnyTradeType, options: SwapOptions): { calldatas: Hex[]; value: Hex;} {
     const {
       calldatas,
       sampleTrade,
@@ -457,7 +471,7 @@ export abstract class SwapRouter {
     }
 
     return {
-      calldata: MulticallExtended.encodeMulticall(calldatas, options.deadlineOrPreviousBlockhash),
+      calldatas,
       value: toHex(inputIsNative ? totalAmountIn.quotient : ZERO),
     }
   }

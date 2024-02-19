@@ -26,11 +26,34 @@ test('exports', () => {
       "Transformer",
       "PoolType",
       "RouteType",
+      "defiLlamaChainNames",
+      "getLlamaChainName",
+      "getChainFromLlamaChainName",
+      "getDefaultGasLimit",
+      "getDefaultGasBuffer",
+      "getGasLimitOnChain",
+      "getGasLimit",
+      "MULTICALL_ADDRESS",
+      "MULTICALL3_ADDRESS",
+      "MULTICALL3_ADDRESSES",
+      "DEFAULT_BLOCK_CONFLICT_TOLERANCE",
+      "BLOCK_CONFLICT_TOLERANCE",
+      "DEFAULT_GAS_LIMIT",
+      "DEFAULT_GAS_LIMIT_BY_CHAIN",
+      "DEFAULT_GAS_BUFFER",
+      "DEFAULT_GAS_BUFFER_BY_CHAIN",
+      "getMulticallContract",
+      "getMulticall3ContractAddress",
+      "multicallByGasLimit",
+      "getBlockConflictTolerance",
+      "AbortError",
+      "abortInvariant",
+      "isAbortError",
     ]
   `)
 })
 
-test('SmartRouter exports', () => {
+test("SmartRouter exports", () => {
   expect(Object.keys(exportedNameSpaces.SmartRouter)).toMatchInlineSnapshot(`
     [
       "getBestTrade",
@@ -65,8 +88,7 @@ test('SmartRouter exports', () => {
       "isV3Pool",
       "getMidPrice",
       "involvesCurrency",
-      "metric",
-      "log",
+      "logger",
       "Transformer",
       "getPoolAddress",
       "getPairCombinations",
