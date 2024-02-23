@@ -1,7 +1,7 @@
 import { ChainId } from '@real-wagmi/sdk'
 import { Address } from 'viem'
 
-export const MULTICALL_ADDRESS: { [key in ChainId]?: Address } = {
+export const MULTICALL_ADDRESS = {
   [ChainId.ZKSYNC]: '0x95071cBD09184083E7F732a710c2e30c9882Fd5f',
   [ChainId.BSC]: '0x39eecaE833c944ebb94942Fa44CaE46e87a8Da17',
   [ChainId.ETHEREUM]: '0xC0916D7E360c31D5F6D0c497E6a36B7B0E80e3cf',
@@ -14,14 +14,15 @@ export const MULTICALL_ADDRESS: { [key in ChainId]?: Address } = {
 
 export const MULTICALL3_ADDRESS = '0xcA11bde05977b3631167028862bE2a173976CA11'
 
-export const MULTICALL3_ADDRESSES: {
-  [key in ChainId]?: Address
-} = {
+export const MULTICALL3_ADDRESSES = {
   [ChainId.ETHEREUM]: MULTICALL3_ADDRESS,
   [ChainId.BSC]: MULTICALL3_ADDRESS,
   [ChainId.ZKSYNC]: '0xF9cda624FBC7e059355ce98a31693d299FACd963',
   [ChainId.ARBITRUM]: MULTICALL3_ADDRESS,
   [ChainId.KAVA]: '0x7d6eb773e9e0a32987082432bd6ffefae4f84dd3',
   [ChainId.METIS]: MULTICALL3_ADDRESS,
-  [ChainId.FANTOM]: '0xca11bde05977b3631167028862be2a173976ca11'
-}
+  [ChainId.FANTOM]: MULTICALL3_ADDRESS,
+  [ChainId.POLYGON]: MULTICALL3_ADDRESS,
+  [ChainId.OPTIMISM]: MULTICALL3_ADDRESS,
+  [ChainId.AVALANCHE]: MULTICALL3_ADDRESS
+} satisfies Record<ChainId, Address>
