@@ -12,5 +12,6 @@ export const defiLlamaChainNames: Record<ChainId, string> = {
     [ChainId.KAVA]: "kava",
     [ChainId.AVALANCHE]: "avalanche",
     [ChainId.ARBITRUM]: "arbitrum-one",
-    [ChainId.METIS]: "metis"
+    [ChainId.METIS]: "metis",
+    [ChainId.BLAST]: "blast"
 }
