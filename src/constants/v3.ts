@@ -16,5 +16,6 @@ export const V3_QUOTER_ADDRESSES: ChainMap<Address> = {
   [ChainId.AVALANCHE]: '' as Address,
   [ChainId.ARBITRUM]: '' as Address,
   [ChainId.METIS]: '0xB9a14EE1cd3417f3AcC988F61650895151abde24',
-  [ChainId.BLAST]: '' as Address
+  [ChainId.BLAST]: '' as Address,
+  [ChainId.BASE]: '' as Address
 }
