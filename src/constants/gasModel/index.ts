@@ -12,7 +12,8 @@ export const usdGasTokensByChain = {
   [ChainId.ARBITRUM]: [arbitrumTokens.usdc, arbitrumTokens.usdt],
   [ChainId.METIS]: [metisTokens.usdt, metisTokens.usdc],
   [ChainId.BLAST]: [blastTokens.usdb],
-  [ChainId.BASE]: [baseTokens.usdbc, baseTokens.usdc]
+  [ChainId.BASE]: [baseTokens.usdbc, baseTokens.usdc],
+  [ChainId.METIS_SEPOLIA]: []
 } satisfies Record<ChainId, Token[]>
 
 export * from './v3';
