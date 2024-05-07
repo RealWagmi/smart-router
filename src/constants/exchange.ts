@@ -1,4 +1,4 @@
-import { Token, ChainId, ethereumTokens, optimismTokens, bscTokens, polygonTokens, fantomTokens, zkSyncTokens, kavaTokens, avalancheTokens, arbitrumTokens, metisTokens, blastTokens, baseTokens, metisSepoliaTokens } from '@real-wagmi/sdk'
+import { Token, ChainId, ethereumTokens, optimismTokens, bscTokens, polygonTokens, fantomTokens, zkSyncTokens, kavaTokens, avalancheTokens, arbitrumTokens, metisTokens, blastTokens, baseTokens, metisSepoliaTokens, zkLinkTokens } from '@real-wagmi/sdk'
 import { ChainMap, ChainTokenList } from '../types'
 
 export const SMART_ROUTER_ADDRESSES: ChainMap<string> = {
@@ -14,7 +14,8 @@ export const SMART_ROUTER_ADDRESSES: ChainMap<string> = {
   [ChainId.METIS]: '0x8B741B0D79BE80E135C880F7583d427B4D41F015',
   [ChainId.BLAST]: '',
   [ChainId.BASE]: '',
-  [ChainId.METIS_SEPOLIA]: '0x77DcC9b09C6Ae94CDC726540735682A38e18d690'
+  [ChainId.METIS_SEPOLIA]: '0x77DcC9b09C6Ae94CDC726540735682A38e18d690',
+  [ChainId.ZKLINK]: '0x4daC0281A3d1b2cc097219e1e393A823E6b01bF7'
 }
 
 // used to construct intermediary pairs for trading
@@ -31,7 +32,8 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   [ChainId.METIS]: [metisTokens.wmetis, metisTokens.usdc, metisTokens.usdt, metisTokens.weth, metisTokens.wbtc],
   [ChainId.BLAST]: [blastTokens.weth, blastTokens.usdb],
   [ChainId.BASE]: [baseTokens.weth, baseTokens.usdc, baseTokens.usdbc],
-  [ChainId.METIS_SEPOLIA]: [metisSepoliaTokens.weth, metisSepoliaTokens.wmetis]
+  [ChainId.METIS_SEPOLIA]: [metisSepoliaTokens.weth, metisSepoliaTokens.wmetis],
+  [ChainId.ZKLINK]: [zkLinkTokens.weth, zkLinkTokens.usdt, zkLinkTokens.usdc, zkLinkTokens.dai, zkLinkTokens.wbtc]
 }
 
 /**

@@ -56,4 +56,11 @@ export const BATCH_MULTICALL_CONFIGS: ChainMap<BatchMulticallConfigs> = {
     },
   },
   [ChainId.METIS_SEPOLIA]: DEFAULT,
+  [ChainId.ZKLINK]: {
+    ...DEFAULT,
+    successRateFailureOverrides: {
+      ...DEFAULT.successRateFailureOverrides,
+      gasLimitPerCall: 3_000_000,
+    }
+  },
 }
