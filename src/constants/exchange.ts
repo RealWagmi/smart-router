@@ -15,7 +15,7 @@ export const SMART_ROUTER_ADDRESSES: ChainMap<string> = {
   [ChainId.BLAST]: '',
   [ChainId.BASE]: '',
   [ChainId.METIS_SEPOLIA]: '0x77DcC9b09C6Ae94CDC726540735682A38e18d690',
-  [ChainId.ZKLINK]: '0x4daC0281A3d1b2cc097219e1e393A823E6b01bF7'
+  [ChainId.ZKLINK]: '0xB2Bd4dB07731BA1517f3f43C4e8fe801F870B374'
 }
 
 // used to construct intermediary pairs for trading
