@@ -1,5 +1,5 @@
-import { BigintIsh } from '@real-wagmi/sdk'
+import { BigintIsh } from '@real-wagmi/sdk';
 
 export function toBigInt(num: BigintIsh): bigint {
-  return BigInt(num.toString())
+    return BigInt(num.toString());
 }

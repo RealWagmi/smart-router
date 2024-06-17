@@ -1,57 +1,54 @@
-import { Currency, CurrencyAmount } from '@real-wagmi/sdk'
+import { Currency, CurrencyAmount } from '@real-wagmi/sdk';
 
-import { GasCost } from './gasCost'
-import { Pool } from './pool'
+import { GasCost } from './gasCost';
+import { Pool } from './pool';
 
 export enum RouteType {
-  V3,
-  MIXED
+    V3,
+    MIXED,
 }
 
 export interface BaseRoute {
-  // Support all v2, v3, stable, and combined
-  // Can derive from pools
-  type: RouteType
+    // Support all v2, v3, stable, and combined
+    // Can derive from pools
+    type: RouteType;
 
-  // Pools that swap will go through
-  pools: Pool[]
+    // Pools that swap will go through
+    pools: Pool[];
 
-  path: Currency[]
+    path: Currency[];
 
-  input: Currency
+    input: Currency;
 
-  output: Currency
+    output: Currency;
 }
 
 export interface RouteWithoutQuote extends BaseRoute {
-  percent: number
-  amount: CurrencyAmount<Currency>
+    percent: number;
+    amount: CurrencyAmount<Currency>;
 }
 
-export type RouteEssentials = Omit<RouteWithoutQuote, 'input' | 'output' | 'amount'>
+export type RouteEssentials = Omit<RouteWithoutQuote, 'input' | 'output' | 'amount'>;
 
 export interface Route extends RouteEssentials {
-  inputAmount: CurrencyAmount<Currency>
-  outputAmount: CurrencyAmount<Currency>
+    inputAmount: CurrencyAmount<Currency>;
+    outputAmount: CurrencyAmount<Currency>;
 }
 
 export interface RouteQuote extends GasCost {
-  // If exact in, this is (quote - gasCostInToken). If exact out, this is (quote + gasCostInToken).
-  quoteAdjustedForGas: CurrencyAmount<Currency>
-  quote: CurrencyAmount<Currency>
+    // If exact in, this is (quote - gasCostInToken). If exact out, this is (quote + gasCostInToken).
+    quoteAdjustedForGas: CurrencyAmount<Currency>;
+    quote: CurrencyAmount<Currency>;
 }
 
-export type RouteWithQuote = RouteWithoutQuote & RouteQuote
+export type RouteWithQuote = RouteWithoutQuote & RouteQuote;
 
-export type RouteWithoutGasEstimate = Omit<
-  RouteWithQuote,
-  'quoteAdjustedForGas' | 'gasEstimate' | 'gasCostInToken' | 'gasCostInUSD'
->
+export type RouteWithoutGasEstimate = Omit<RouteWithQuote, 'quoteAdjustedForGas' | 'gasEstimate' | 'gasCostInToken' | 'gasCostInUSD'>;
 
 export interface BestRoutes {
-  gasEstimate: bigint
-  gasEstimateInUSD: CurrencyAmount<Currency>
-  routes: Route[]
-  inputAmount: CurrencyAmount<Currency>
-  outputAmount: CurrencyAmount<Currency>
+    gasEstimate: bigint;
+    gasEstimateInUSD: CurrencyAmount<Currency>;
+    routes: Route[];
+    inputAmount: CurrencyAmount<Currency>;
+    outputAmount: CurrencyAmount<Currency>;
 }

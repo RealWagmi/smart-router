@@ -1,8 +1,8 @@
-import { expect, test } from 'vitest'
-import * as exportedNameSpaces from './index'
+import { expect, test } from 'vitest';
+import * as exportedNameSpaces from './index';
 
 test('exports', () => {
-  expect(Object.keys(exportedNameSpaces)).toMatchInlineSnapshot(`
+    expect(Object.keys(exportedNameSpaces)).toMatchInlineSnapshot(`
     [
       "BIG_INT_TEN",
       "BIPS_BASE",
@@ -50,11 +50,11 @@ test('exports', () => {
       "abortInvariant",
       "isAbortError",
     ]
-  `)
-})
+  `);
+});
 
-test("SmartRouter exports", () => {
-  expect(Object.keys(exportedNameSpaces.SmartRouter)).toMatchInlineSnapshot(`
+test('SmartRouter exports', () => {
+    expect(Object.keys(exportedNameSpaces.SmartRouter)).toMatchInlineSnapshot(`
     [
       "getBestTrade",
       "v3PoolSubgraphSelection",
@@ -95,5 +95,5 @@ test("SmartRouter exports", () => {
       "getCheckAgainstBaseTokens",
       "APISchema",
     ]
-  `)
-})
+  `);
+});

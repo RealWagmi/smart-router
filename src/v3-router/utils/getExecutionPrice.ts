@@ -1,15 +1,15 @@
-import { Price, TradeType, ZERO } from '@real-wagmi/sdk'
+import { Price, TradeType, ZERO } from '@real-wagmi/sdk';
 
-import { SmartRouterTrade } from '../types'
+import { SmartRouterTrade } from '../types';
 
 export function getExecutionPrice(trade: SmartRouterTrade<TradeType> | null | undefined) {
-  if (!trade) {
-    return null
-  }
+    if (!trade) {
+        return null;
+    }
 
-  const { inputAmount, outputAmount } = trade
-  if (inputAmount.quotient === ZERO || outputAmount.quotient === ZERO) {
-    return null
-  }
-  return new Price(inputAmount.currency, outputAmount.currency, inputAmount.quotient, outputAmount.quotient)
+    const { inputAmount, outputAmount } = trade;
+    if (inputAmount.quotient === ZERO || outputAmount.quotient === ZERO) {
+        return null;
+    }
+    return new Price(inputAmount.currency, outputAmount.currency, inputAmount.quotient, outputAmount.quotient);
 }

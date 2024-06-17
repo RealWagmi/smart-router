@@ -1,40 +1,41 @@
-import { BigintIsh, Currency, CurrencyAmount, TradeType } from '@real-wagmi/sdk'
+import { BigintIsh, Currency, CurrencyAmount, TradeType } from '@real-wagmi/sdk';
 
-import { Route } from './route'
-import { PoolProvider, QuoteProvider } from './providers'
-import { PoolType } from './pool'
-import { AbortControl } from '../../utils/abortControl'
+import { Route } from './route';
+import { PoolProvider, QuoteProvider } from './providers';
+import { PoolType } from './pool';
+import { AbortControl } from '../../utils/abortControl';
 
 export interface SmartRouterTrade<TTradeType extends TradeType> {
-  tradeType: TTradeType
-  inputAmount: CurrencyAmount<Currency>
-  outputAmount: CurrencyAmount<Currency>
+    tradeType: TTradeType;
+    inputAmount: CurrencyAmount<Currency>;
+    outputAmount: CurrencyAmount<Currency>;
 
-  // From routes we know how many splits and what percentage does each split take
-  routes: Route[]
+    // From routes we know how many splits and what percentage does each split take
+    routes: Route[];
 
-  gasEstimate: bigint
-  gasEstimateInUSD: CurrencyAmount<Currency>
-  blockNumber?: number
+    gasEstimate: bigint;
+    gasEstimateInUSD: CurrencyAmount<Currency>;
+    blockNumber?: number;
 }
 
 export type PriceReferences = {
-  quoteCurrencyUsdPrice?: number
-  nativeCurrencyUsdPrice?: number
-}
+    quoteCurrencyUsdPrice?: number;
+    nativeCurrencyUsdPrice?: number;
+};
 
 export type TradeConfig = {
-  gasPriceWei: BigintIsh | (() => Promise<BigintIsh>)
-  blockNumber?: number | (() => Promise<number>)
-  poolProvider: PoolProvider
-  quoteProvider: QuoteProvider
-  maxHops?: number
-  maxSplits?: number
-  distributionPercent?: number
-  allowedPoolTypes?: PoolType[]
-  quoterOptimization?: boolean
-} & PriceReferences & AbortControl
+    gasPriceWei: BigintIsh | (() => Promise<BigintIsh>);
+    blockNumber?: number | (() => Promise<number>);
+    poolProvider: PoolProvider;
+    quoteProvider: QuoteProvider;
+    maxHops?: number;
+    maxSplits?: number;
+    distributionPercent?: number;
+    allowedPoolTypes?: PoolType[];
+    quoterOptimization?: boolean;
+} & PriceReferences &
+    AbortControl;
 
 export interface RouteConfig extends TradeConfig {
-  blockNumber?: number
+    blockNumber?: number;
 }

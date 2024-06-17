@@ -1,7 +1,7 @@
-import { Token, ChainId } from '@real-wagmi/sdk'
+import { Token, ChainId } from '@real-wagmi/sdk';
 
-import { usdGasTokensByChain } from '../../constants'
+import { usdGasTokensByChain } from '../../constants';
 
 export function getUsdGasToken(chainId: ChainId): Token | null {
-  return usdGasTokensByChain[chainId]?.[0] ?? null
+    return usdGasTokensByChain[chainId]?.[0] ?? null;
 }
