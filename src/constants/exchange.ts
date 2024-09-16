@@ -16,6 +16,7 @@ import {
     metisSepoliaTokens,
     zkLinkTokens,
     iotaTokens,
+    sonicTestnetTokens
 } from '@real-wagmi/sdk';
 import { ChainMap, ChainTokenList } from '../types';
 
@@ -35,6 +36,7 @@ export const SMART_ROUTER_ADDRESSES: ChainMap<string> = {
     [ChainId.METIS_SEPOLIA]: '0x77DcC9b09C6Ae94CDC726540735682A38e18d690',
     [ChainId.ZKLINK]: '0xB2Bd4dB07731BA1517f3f43C4e8fe801F870B374',
     [ChainId.IOTA]: '0xaE7b92C8B14E7bdB523408aE0A6fFbf3f589adD9',
+    [ChainId.SONIC_TESTNET]: '0x07Ed33a242BD9C08CA3C198e01189e35265024Da'
 };
 
 // used to construct intermediary pairs for trading
@@ -54,6 +56,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     [ChainId.METIS_SEPOLIA]: [metisSepoliaTokens.weth, metisSepoliaTokens.wmetis],
     [ChainId.ZKLINK]: [zkLinkTokens.weth, zkLinkTokens.usdt, zkLinkTokens.usdc, zkLinkTokens.dai, zkLinkTokens.wbtc],
     [ChainId.IOTA]: [iotaTokens.weth, iotaTokens.usdt, iotaTokens.usdc, iotaTokens.wiota],
+    [ChainId.SONIC_TESTNET]: [sonicTestnetTokens.tweth, sonicTestnetTokens.tusdt, sonicTestnetTokens.tdai]
 };
 
 /**
