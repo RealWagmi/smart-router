@@ -11,6 +11,11 @@ export {
   logger,
   Transformer,
   getPoolAddress,
+  encodeMixedRouteToPath,
+  buildBaseRoute,
+  log,
+  getPriceImpact,
+  metric,
 } from './utils'
 export { getPairCombinations, getCheckAgainstBaseTokens } from './functions'
 export * as APISchema from './schema'
