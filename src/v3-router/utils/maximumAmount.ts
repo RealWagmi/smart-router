@@ -2,7 +2,7 @@ import { Percent, TradeType, Fraction, ONE, CurrencyAmount } from '@real-wagmi/s
 
 import { SmartRouterTrade } from '../types';
 
-export function maximumAmountIn(trade: SmartRouterTrade<TradeType>, slippage: Percent, amountIn = trade.inputAmount) {
+export function maximumAmountIn(trade: Pick<SmartRouterTrade<TradeType>, 'inputAmount' | 'tradeType'>, slippage: Percent, amountIn = trade.inputAmount) {
     if (trade.tradeType === TradeType.EXACT_INPUT) {
         return amountIn;
     }
@@ -11,7 +11,7 @@ export function maximumAmountIn(trade: SmartRouterTrade<TradeType>, slippage: Pe
     return CurrencyAmount.fromRawAmount(amountIn.currency, slippageAdjustedAmountIn);
 }
 
-export function minimumAmountOut(trade: SmartRouterTrade<TradeType>, slippage: Percent, amountOut = trade.outputAmount) {
+export function minimumAmountOut(trade: Pick<SmartRouterTrade<TradeType>, 'outputAmount' | 'tradeType'>, slippage: Percent, amountOut = trade.outputAmount) {
     if (trade.tradeType === TradeType.EXACT_OUTPUT) {
         return amountOut;
     }
