@@ -11,10 +11,8 @@ import {
     avalancheTokens,
     arbitrumTokens,
     metisTokens,
-    blastTokens,
     baseTokens,
     metisSepoliaTokens,
-    zkLinkTokens,
     iotaTokens,
     sonicTestnetTokens,
 } from '@real-wagmi/sdk';
@@ -31,10 +29,8 @@ export const SMART_ROUTER_ADDRESSES: ChainMap<string> = {
     [ChainId.POLYGON]: '0x53dca7E0015B8c445881A9BC2baC1D8648d7f800',
     [ChainId.AVALANCHE]: '0xd5B59C29efC50348241e815D1AFc37d1A7B26544',
     [ChainId.METIS]: '0x8B741B0D79BE80E135C880F7583d427B4D41F015',
-    [ChainId.BLAST]: '',
     [ChainId.BASE]: '0xB5fa77E3929fe198a86Aa40fd6c77886785bCd0e',
     [ChainId.METIS_SEPOLIA]: '0x77DcC9b09C6Ae94CDC726540735682A38e18d690',
-    [ChainId.ZKLINK]: '0xB2Bd4dB07731BA1517f3f43C4e8fe801F870B374',
     [ChainId.IOTA]: '0xaE7b92C8B14E7bdB523408aE0A6fFbf3f589adD9',
     [ChainId.SONIC_TESTNET]: '0x07Ed33a242BD9C08CA3C198e01189e35265024Da',
 };
@@ -51,10 +47,8 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     [ChainId.AVALANCHE]: [avalancheTokens.wavax, avalancheTokens.usdc, avalancheTokens.usdt],
     [ChainId.ARBITRUM]: [arbitrumTokens.weth, arbitrumTokens.usdc, arbitrumTokens.usdt, arbitrumTokens.wbtc],
     [ChainId.METIS]: [metisTokens.wmetis, metisTokens.usdc, metisTokens.usdt, metisTokens.weth, metisTokens.wbtc],
-    [ChainId.BLAST]: [blastTokens.weth, blastTokens.usdb],
     [ChainId.BASE]: [baseTokens.weth, baseTokens.usdc, baseTokens.usdbc],
     [ChainId.METIS_SEPOLIA]: [metisSepoliaTokens.weth, metisSepoliaTokens.wmetis],
-    [ChainId.ZKLINK]: [zkLinkTokens.weth, zkLinkTokens.usdt, zkLinkTokens.usdc, zkLinkTokens.dai, zkLinkTokens.wbtc],
     [ChainId.IOTA]: [iotaTokens.weth, iotaTokens.usdt, iotaTokens.usdc, iotaTokens.wiota],
     [ChainId.SONIC_TESTNET]: [sonicTestnetTokens.tweth, sonicTestnetTokens.tusdt, sonicTestnetTokens.tdai],
 };

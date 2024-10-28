@@ -13,10 +13,8 @@ export const defiLlamaChainNames: Record<ChainId, string> = {
     [ChainId.AVALANCHE]: 'avalanche',
     [ChainId.ARBITRUM]: 'arbitrum-one',
     [ChainId.METIS]: 'metis',
-    [ChainId.BLAST]: 'blast',
     [ChainId.BASE]: 'base',
     [ChainId.METIS_SEPOLIA]: 'metis-sepolia',
-    [ChainId.ZKLINK]: 'zklink',
     [ChainId.IOTA]: 'iota',
     [ChainId.SONIC_TESTNET]: 'sonic-testnet',
 };

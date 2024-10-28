@@ -47,7 +47,6 @@ export const BATCH_MULTICALL_CONFIGS: ChainMap<BatchMulticallConfigs> = {
     [ChainId.AVALANCHE]: DEFAULT,
     [ChainId.ARBITRUM]: DEFAULT,
     [ChainId.METIS]: DEFAULT,
-    [ChainId.BLAST]: DEFAULT,
     [ChainId.BASE]: {
         ...DEFAULT,
         defaultConfig: {
@@ -56,13 +55,6 @@ export const BATCH_MULTICALL_CONFIGS: ChainMap<BatchMulticallConfigs> = {
         },
     },
     [ChainId.METIS_SEPOLIA]: DEFAULT,
-    [ChainId.ZKLINK]: {
-        ...DEFAULT,
-        successRateFailureOverrides: {
-            ...DEFAULT.successRateFailureOverrides,
-            gasLimitPerCall: 3_000_000,
-        },
-    },
     [ChainId.IOTA]: DEFAULT,
     [ChainId.SONIC_TESTNET]: DEFAULT,
 };

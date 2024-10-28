@@ -1,4 +1,4 @@
-import { Token, ChainId, arbitrumTokens, ethereumTokens, fantomTokens, kavaTokens, zkSyncTokens, optimismTokens, bscTokens, polygonTokens, avalancheTokens, metisTokens, blastTokens, baseTokens, metisSepoliaTokens, zkLinkTokens, iotaTokens, sonicTestnetTokens } from '@real-wagmi/sdk';
+import { Token, ChainId, arbitrumTokens, ethereumTokens, fantomTokens, kavaTokens, zkSyncTokens, optimismTokens, bscTokens, polygonTokens, avalancheTokens, metisTokens, baseTokens, metisSepoliaTokens, iotaTokens, sonicTestnetTokens } from '@real-wagmi/sdk';
 
 export const usdGasTokensByChain = {
   [ChainId.ETHEREUM]: [ethereumTokens.usdt, ethereumTokens.usdc],
@@ -11,10 +11,8 @@ export const usdGasTokensByChain = {
   [ChainId.AVALANCHE]: [avalancheTokens.usdc, avalancheTokens.usdt],
   [ChainId.ARBITRUM]: [arbitrumTokens.usdc, arbitrumTokens.usdt],
   [ChainId.METIS]: [metisTokens.usdt, metisTokens.usdc],
-  [ChainId.BLAST]: [blastTokens.usdb],
   [ChainId.BASE]: [baseTokens.usdbc, baseTokens.usdc],
   [ChainId.METIS_SEPOLIA]: [metisSepoliaTokens.tusdt, metisSepoliaTokens.tdai],
-  [ChainId.ZKLINK]: [zkLinkTokens.usdt, zkLinkTokens.usdc, zkLinkTokens.dai],
   [ChainId.IOTA]: [iotaTokens.usdt, iotaTokens.usdc],
   [ChainId.SONIC_TESTNET]: [sonicTestnetTokens.tusdt, sonicTestnetTokens.tdai]
 } satisfies Record<ChainId, Token[]>
