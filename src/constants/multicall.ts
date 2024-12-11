@@ -57,4 +57,5 @@ export const BATCH_MULTICALL_CONFIGS: ChainMap<BatchMulticallConfigs> = {
     [ChainId.METIS_SEPOLIA]: DEFAULT,
     [ChainId.IOTA]: DEFAULT,
     [ChainId.SONIC_TESTNET]: DEFAULT,
+    [ChainId.SONIC]: DEFAULT
 };

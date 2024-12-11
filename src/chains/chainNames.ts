@@ -17,4 +17,5 @@ export const defiLlamaChainNames: Record<ChainId, string> = {
     [ChainId.METIS_SEPOLIA]: 'metis-sepolia',
     [ChainId.IOTA]: 'iota',
     [ChainId.SONIC_TESTNET]: 'sonic-testnet',
+    [ChainId.SONIC]: 'sonic',
 };

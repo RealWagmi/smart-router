@@ -1495,10 +1495,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@real-wagmi/sdk@1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@real-wagmi/sdk/-/sdk-1.4.0.tgz#c1af6b3d5048aabc25f24e0cc4d69d2f6be904e2"
-  integrity sha512-i2GZbqzvz5SK8MII2uqnwfFgYejIKfjGRctxDecIyO1N9JADjhf7oP/MSvUVcdXFcBeneKkurTFkZvy4mp4IPw==
+"@real-wagmi/sdk@1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@real-wagmi/sdk/-/sdk-1.4.1.tgz#60d07adbdb56bd01599ca5ce9caf3867ca95b12b"
+  integrity sha512-RxGxnZCazmVgUmdthIfKSXmaGME3p5xNqOPALMjGe/MFdw3lE3irrV2kOv+JwYIWLAtzwpx84yBdG7i6l3Wc0A==
   dependencies:
     "@uniswap/token-lists" "1.0.0-beta.33"
     big.js "^6.2.1"
@@ -1508,12 +1508,12 @@
     viem "^2.7.20"
     vitest "^1.3.1"
 
-"@real-wagmi/v3-sdk@1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@real-wagmi/v3-sdk/-/v3-sdk-1.4.0.tgz#e01b1dd0e446fe6916099a9dcf0e3cdc765ab839"
-  integrity sha512-dlOKK93JY0Hs1pDCtih4kdsG7FRbh0O75DsTsz4ca2YfsKSv+8/oNl9U/3p7kqIicjNf/BSpcngOIqg0g905sQ==
+"@real-wagmi/v3-sdk@1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@real-wagmi/v3-sdk/-/v3-sdk-1.4.1.tgz#88b280fbf333fa1d80f8f3a2a10aeacd2477e90a"
+  integrity sha512-8j8ThOEnYUT4BFEZweIWIRv36Rm74m9hzPxR+HlnhbyKwjoutB6qxGIvSzG8/f0/ePyI3GNosT25+9n4vEjWLw==
   dependencies:
-    "@real-wagmi/sdk" "1.4.0"
+    "@real-wagmi/sdk" "1.4.1"
     viem "^2.7.22"
 
 "@rollup/plugin-babel@^5.1.0":

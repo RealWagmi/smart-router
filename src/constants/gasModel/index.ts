@@ -14,7 +14,8 @@ export const usdGasTokensByChain = {
   [ChainId.BASE]: [baseTokens.usdbc, baseTokens.usdc],
   [ChainId.METIS_SEPOLIA]: [metisSepoliaTokens.tusdt, metisSepoliaTokens.tdai],
   [ChainId.IOTA]: [iotaTokens.usdt, iotaTokens.usdc],
-  [ChainId.SONIC_TESTNET]: [sonicTestnetTokens.tusdt, sonicTestnetTokens.tdai]
+  [ChainId.SONIC_TESTNET]: [sonicTestnetTokens.tusdt],
+  [ChainId.SONIC]: []
 } satisfies Record<ChainId, Token[]>
 
 export * from './v3';
