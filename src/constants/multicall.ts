@@ -54,8 +54,6 @@ export const BATCH_MULTICALL_CONFIGS: ChainMap<BatchMulticallConfigs> = {
             dropUnexecutedCalls: true,
         },
     },
-    [ChainId.METIS_SEPOLIA]: DEFAULT,
     [ChainId.IOTA]: DEFAULT,
-    [ChainId.SONIC_TESTNET]: DEFAULT,
     [ChainId.SONIC]: DEFAULT
 };
