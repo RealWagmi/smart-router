@@ -47,7 +47,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     [ChainId.METIS]: [metisTokens.wmetis, metisTokens.usdc, metisTokens.usdt, metisTokens.weth, metisTokens.wbtc],
     [ChainId.BASE]: [baseTokens.weth, baseTokens.usdc, baseTokens.usdbc],
     [ChainId.IOTA]: [iotaTokens.weth, iotaTokens.usdt, iotaTokens.usdc, iotaTokens.wiota],
-    [ChainId.SONIC]: [sonicTokens.ws, sonicTokens.weth, sonicTokens.usdce]
+    [ChainId.SONIC]: [sonicTokens.ws, sonicTokens.weth, sonicTokens.usdce, sonicTokens.wagmi]
 };
 
 /**
