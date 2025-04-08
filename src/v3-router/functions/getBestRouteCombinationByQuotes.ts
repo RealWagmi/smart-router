@@ -47,7 +47,7 @@ export function getBestRouteCombinationByQuotes(
     const swapRoute = getBestSwapRouteBy(
         tradeType,
         percentToQuotes,
-        percents.sort((a, b) => a - b),
+        percents.toSorted((a, b) => a - b),
         chainId,
         (rq: RouteWithQuote) => rq.quoteAdjustedForGas,
         config,
@@ -134,7 +134,7 @@ export function getBestSwapRouteBy(
 } | null {
     // Build a map of percentage to sorted list of quotes, with the biggest quote being first in the list.
     const percentToSortedQuotes = mapValues(percentToQuotes, (routeQuotes: RouteWithQuote[]) => {
-        return routeQuotes.sort((routeQuoteA, routeQuoteB) => {
+        return routeQuotes.toSorted((routeQuoteA, routeQuoteB) => {
             if (tradeType === TradeType.EXACT_INPUT) {
                 return by(routeQuoteA).greaterThan(by(routeQuoteB)) ? -1 : 1;
             }
@@ -439,7 +439,7 @@ export function getBestSwapRouteBy(
     //     flatL1GasCostUSD: gasCostL1USD.toExact(),
     //   },
     //   'USD gas estimates of best route',
-    // )
+    // );
 
     const estimatedGasUsedQuoteToken = sumFn(bestSwap.map(routeWithValidQuote => routeWithValidQuote.gasCostInToken)).add(gasCostL1QuoteToken);
 
@@ -454,7 +454,7 @@ export function getBestSwapRouteBy(
         quoteGasAdjusted = quoteGasAdjustedForL1;
     }
 
-    const routeWithQuotes = bestSwap.sort((routeAmountA, routeAmountB) => (routeAmountB.amount.greaterThan(routeAmountA.amount) ? 1 : -1));
+    const routeWithQuotes = bestSwap.toSorted((routeAmountA, routeAmountB) => (routeAmountB.amount.greaterThan(routeAmountA.amount) ? 1 : -1));
 
     // metric.putMetric(
     //   'PostSplitDone',
