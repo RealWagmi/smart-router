@@ -12,4 +12,5 @@ export const BLOCK_CONFLICT_TOLERANCE: { [key in ChainId]?: number } = {
     [ChainId.KAVA]: 3,
     [ChainId.METIS]: 5,
     [ChainId.IOTA]: 3,
+    [ChainId.SONIC]: 30,
 };

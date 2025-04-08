@@ -13,7 +13,7 @@ import {
     metisTokens,
     baseTokens,
     iotaTokens,
-    sonicTokens
+    sonicTokens,
 } from '@real-wagmi/sdk';
 import { ChainMap, ChainTokenList } from '../types';
 
@@ -30,7 +30,7 @@ export const SMART_ROUTER_ADDRESSES: ChainMap<string> = {
     [ChainId.METIS]: '0x8B741B0D79BE80E135C880F7583d427B4D41F015',
     [ChainId.BASE]: '0xB5fa77E3929fe198a86Aa40fd6c77886785bCd0e',
     [ChainId.IOTA]: '0xaE7b92C8B14E7bdB523408aE0A6fFbf3f589adD9',
-    [ChainId.SONIC]: '0x1Ac569879EF7EacB17CC373EF801cDcE4acCdeD5'
+    [ChainId.SONIC]: '0x1Ac569879EF7EacB17CC373EF801cDcE4acCdeD5',
 };
 
 // used to construct intermediary pairs for trading
@@ -47,7 +47,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     [ChainId.METIS]: [metisTokens.wmetis, metisTokens.usdc, metisTokens.usdt, metisTokens.weth, metisTokens.wbtc],
     [ChainId.BASE]: [baseTokens.weth, baseTokens.usdc, baseTokens.usdbc],
     [ChainId.IOTA]: [iotaTokens.weth, iotaTokens.usdt, iotaTokens.usdc, iotaTokens.wiota],
-    [ChainId.SONIC]: [sonicTokens.ws, sonicTokens.weth, sonicTokens.usdce, sonicTokens.wagmi]
+    [ChainId.SONIC]: [sonicTokens.ws, sonicTokens.weth, sonicTokens.usdce, sonicTokens.wagmi],
 };
 
 /**

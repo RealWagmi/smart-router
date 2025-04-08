@@ -6,6 +6,7 @@ import { BaseRoute, GasModel, QuoteProvider, RouteWithoutQuote, RouteWithQuote }
 import { getAmountDistribution } from './functions';
 import { metric } from './utils/metric';
 import { AbortControl } from '../utils/abortControl';
+import { pMap } from '../utils/pMap';
 
 type Params = {
     blockNumber?: BigintIsh;
@@ -62,7 +63,7 @@ export async function getRoutesWithValidQuote({
             });
         });
     const chunks = chunk(routesWithoutQuote, 10);
-    const result = await Promise.all(chunks.map(getQuotes));
+    const result = await pMap(chunks, async chunk => getQuotes(chunk), { concurrency: 5 });
     const quotes = result.reduce<RouteWithQuote[]>((acc, cur) => [...acc, ...cur], []);
     metric('Get quotes', 'success, got', quotes.length, 'quoted routes', quotes);
     return quotes;

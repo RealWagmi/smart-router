@@ -1,16 +1,16 @@
 /* eslint-disable no-console */
 import { QuoteProvider, RouteWithoutQuote, RouteWithQuote, RouteType, QuoterOptions, QuoterConfig } from '../types';
-import { createOffChainQuoteProvider } from './offChainQuoteProvider';
+// import { createOffChainQuoteProvider } from './offChainQuoteProvider';
 import { createV3OnChainQuoteProvider } from './onChainQuoteProvider';
 
 // For evm
 export function createQuoteProvider(config: QuoterConfig): QuoteProvider<QuoterConfig> {
     const { onChainProvider, multicallConfigs, gasLimit } = config;
-    const offChainQuoteProvider = createOffChainQuoteProvider();
+    // const offChainQuoteProvider = createOffChainQuoteProvider();
     const v3OnChainQuoteProvider = createV3OnChainQuoteProvider({ onChainProvider, multicallConfigs, gasLimit });
 
     const createGetRouteWithQuotes = (isExactIn = true) => {
-        const getOffChainQuotes = isExactIn ? offChainQuoteProvider.getRouteWithQuotesExactIn : offChainQuoteProvider.getRouteWithQuotesExactOut;
+        // const getOffChainQuotes = isExactIn ? offChainQuoteProvider.getRouteWithQuotesExactIn : offChainQuoteProvider.getRouteWithQuotesExactOut;
         const getV3Quotes = isExactIn ? v3OnChainQuoteProvider.getRouteWithQuotesExactIn : v3OnChainQuoteProvider.getRouteWithQuotesExactOut;
 
         return async function getRoutesWithQuotes(routes: RouteWithoutQuote[], { blockNumber, gasModel, signal }: QuoterOptions): Promise<RouteWithQuote[]> {
@@ -30,7 +30,7 @@ export function createQuoteProvider(config: QuoterConfig): QuoteProvider<QuoterC
             }
 
             const results = await Promise.allSettled([
-                getOffChainQuotes(routesCanQuoteOffChain, { blockNumber, gasModel, signal }),
+                // getOffChainQuotes(routesCanQuoteOffChain, { blockNumber, gasModel, signal }),
                 getV3Quotes(v3SingleHopRoutes, { blockNumber, gasModel, signal }),
                 getV3Quotes(v3MultihopRoutes, { blockNumber, gasModel, retry: { retries: 1 }, signal }),
             ]);

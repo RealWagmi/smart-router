@@ -20,7 +20,7 @@ function poolSelectorFactory<P extends WithTvl>({ getPoolSelectorConfig, getToke
         if (!currencyA || !currencyB || !unorderedPoolsWithTvl.length) {
             return [];
         }
-        const poolsFromSubgraph = unorderedPoolsWithTvl.sort(sortByTvl);
+        const poolsFromSubgraph = unorderedPoolsWithTvl.toSorted(sortByTvl);
         const { chainId } = getToken0(poolsFromSubgraph[0]);
         const baseTokens: Token[] = BASES_TO_CHECK_TRADES_AGAINST[chainId as ChainId] ?? [];
 
@@ -40,11 +40,11 @@ function poolSelectorFactory<P extends WithTvl>({ getPoolSelectorConfig, getToke
                             (getToken1(subgraphPool).wrapped.equals(token) && getToken0(subgraphPool).wrapped.equals(currencyA.wrapped))
                         );
                     })
-                    .sort(sortByTvl)
+                    .toSorted(sortByTvl)
                     .slice(0, POOL_SELECTION_CONFIG.topNWithEachBaseToken);
             })
             .reduce<P[]>((acc, cur) => [...acc, ...cur], [])
-            .sort(sortByTvl)
+            .toSorted(sortByTvl)
             .slice(0, POOL_SELECTION_CONFIG.topNWithBaseToken);
 
         addToPoolSet(topByBaseWithTokenIn);
@@ -61,11 +61,11 @@ function poolSelectorFactory<P extends WithTvl>({ getPoolSelectorConfig, getToke
                             (getToken1(subgraphPool).wrapped.equals(token) && getToken0(subgraphPool).wrapped.equals(currencyB.wrapped))
                         );
                     })
-                    .sort(sortByTvl)
+                    .toSorted(sortByTvl)
                     .slice(0, POOL_SELECTION_CONFIG.topNWithEachBaseToken);
             })
             .reduce<P[]>((acc, cur) => [...acc, ...cur], [])
-            .sort(sortByTvl)
+            .toSorted(sortByTvl)
             .slice(0, POOL_SELECTION_CONFIG.topNWithBaseToken);
 
         addToPoolSet(topByBaseWithTokenOut);
@@ -154,7 +154,7 @@ function poolSelectorFactory<P extends WithTvl>({ getPoolSelectorConfig, getToke
                 .reduce<P[]>((acc, cur) => [...acc, ...cur], [])
                 // Uniq
                 .reduce<P[]>((acc, cur) => (acc.some(p => p === cur) ? acc : [...acc, cur]), [])
-                .sort(sortByTvl)
+                .toSorted(sortByTvl)
                 .slice(0, POOL_SELECTION_CONFIG.topNSecondHop);
 
         const topByTVLUsingTokenInSecondHops = getTopByTVLUsingTokenSecondHops([...topByTVLUsingTokenBase, ...topByBaseWithTokenIn], currencyA);

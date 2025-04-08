@@ -55,5 +55,5 @@ export const BATCH_MULTICALL_CONFIGS: ChainMap<BatchMulticallConfigs> = {
         },
     },
     [ChainId.IOTA]: DEFAULT,
-    [ChainId.SONIC]: DEFAULT
+    [ChainId.SONIC]: DEFAULT,
 };
