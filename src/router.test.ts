@@ -55,9 +55,7 @@ describe('test router', () => {
             currencyB: swapTo,
         });
 
-        console.log(`v3 pools: ${v3Pools.length}`);
-
-        const amount = tryParseAmount("108", swapFrom);
+        const amount = tryParseAmount("200", swapFrom);
     
         const trade = await SmartRouter.getBestTrade(amount!, swapTo, TradeType.EXACT_INPUT, {
             gasPriceWei: () => publicClient.getGasPrice(),
