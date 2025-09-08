@@ -38,7 +38,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     [ChainId.ETHEREUM]: [ethereumTokens.weth, ethereumTokens.usdc, ethereumTokens.usdt, ethereumTokens.dai, ethereumTokens.wbtc],
     [ChainId.OPTIMISM]: [optimismTokens.weth, optimismTokens.wbtc, optimismTokens.usdc, optimismTokens.usdt, optimismTokens.dai],
     [ChainId.BSC]: [bscTokens.wbnb, bscTokens.usdc, bscTokens.usdt],
-    [ChainId.POLYGON]: [polygonTokens.wmatic, polygonTokens.usdc, polygonTokens.usdt],
+    [ChainId.POLYGON]: [polygonTokens.wpol, polygonTokens.usdc, polygonTokens.usdt],
     [ChainId.FANTOM]: [fantomTokens.wftm, fantomTokens.dai, fantomTokens.frax, fantomTokens.usdc, fantomTokens.usdt],
     [ChainId.ZKSYNC]: [zkSyncTokens.weth, zkSyncTokens.usdc, zkSyncTokens.busd],
     [ChainId.KAVA]: [kavaTokens.wkava, kavaTokens.usdt, kavaTokens.usdc, kavaTokens.weth],
